@@ -6,23 +6,23 @@ angular.module("myGardenApp", ['ui.router'])
   $stateProvider
       // HOME STATES AND NESTED VIEWS ========================================
       .state('home', {
-          url: '/home',
+          url: '/',
           views: {
-            '': { templateUrl: 'home.html' },
+            '': { templateUrl: '/partials/home.html' },
             'active-plants@home': { 
-              templateUrl: 'active-garden.html',
+              templateUrl: '/partials/active-garden.html',
               controller: 'ActiveCtrl'
             },
             'to-plant@home': { 
-              templateUrl: 'to-plant.html',
+              templateUrl: '/partials/to-plant.html',
               controller: 'ToPlantCtrl'
             },
             'search-plants@home': { 
-              templateUrl: 'search-plants.html',
+              templateUrl: '/partials/search-plants.html',
               controller: 'PlantSearchCtrl'
             },
             'plant-alerts@home': { 
-              templateUrl: 'plant-alerts.html',
+              templateUrl: '/partials/plant-alerts.html',
               controller: 'PlantAlertCtrl'
             }
 
