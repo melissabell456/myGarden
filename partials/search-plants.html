@@ -2,4 +2,9 @@
   <h2>{{header}}</h2>
   <input type="text" ng-model="searchTerm" placeholder="Search By Plant Name">
   <button ng-click="searchDB()">Search</button>
+  <p>{{searchResult.name}}</p>
+  <p>{{searchResult.optimal_sun}}</p>
+  <p>{{searchResult.when_to_plant}}</p>
+  <!-- <img src="{{searchResult.image}}"> -->
+  <button ng-click="addPlant(searchResult.id)">Add To Plant List</button>
 </div>

@@ -5,12 +5,21 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($scope, Pla
   $scope.header = "Plant Search";
   $scope.searchTerm = "";
 
+  // this function is triggered when user clicks Search btn
   $scope.searchDB = () => {
-    return PlantStatsFctry.searchByName($scope.searchTerm)
+    // plant name is passed in to query firebase to gather plant id necessary to query API
+    PlantStatsFctry.searchByName($scope.searchTerm)
     .then((plantSearchResult) => {
-      // console.log(plantSearchResult);
-      $scope.searchResult = HarvestHelperFctry.searchByID(plantSearchResult);
+      // request is sent to API to get only that plant ID's result
+      return HarvestHelperFctry.searchByID(plantSearchResult);
+    })
+    .then((dbResult) => {
+      $scope.searchResult = dbResult;
     });
+  };
+
+  $scope.addPlant = (plant) => {
+    console.log("plant to add", plant);
   };
   
 });

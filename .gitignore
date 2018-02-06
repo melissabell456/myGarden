@@ -4,4 +4,4 @@ dist/
 .sass-cache
 assets/css/
 lib/package-lock.json
-app/config/api_keys.js
+app/config/
