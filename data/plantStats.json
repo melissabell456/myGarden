@@ -1,0 +1,313 @@
+{
+  "plants":
+  [
+  {
+    "name": "Basil",
+    "id": 2,
+    "water-interval": 1,
+    "plant-date": "04/01",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Lettuce",
+    "id": 3,
+    "water-interval": 1,
+    "plant-date": "03/15",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Carrots",
+    "id": 4,
+    "water-interval": 7,
+    "plant-date": "03/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Broccoli",
+    "id": 8,
+    "water-interval": 1,
+    "plant-date": "03/15",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Parsnips",
+    "id": 22,
+    "water-interval": 7,
+    "plant-date": "04/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Brussels Sprouts",
+    "id": 9,
+    "water-interval": 3,
+    "plant-date": "07/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Cabbage",
+    "id": 10,
+    "water-interval": 7,
+    "plant-date": "03/20",
+    "indoor-plant-date": "02/04"
+  },
+  {
+    "name": "Chives",
+    "id": 13,
+    "water-interval": 1,
+    "plant-date": "04/01",
+    "indoor-plant-date": "01/20"
+  },
+  {
+    "name": "Cucumbers",
+    "id": 15,
+    "water-interval": 1,
+    "plant-date": "05/01",
+    "indoor-plant-date": "04/01"
+  },
+  {
+    "name": "Sweet Corn",
+    "id": 16,
+    "water-interval": 1,
+    "plant-date": "04/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Eggplant",
+    "id": 17,
+    "water-interval": 1,
+    "plant-date": "05/01",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Onion",
+    "id": 18,
+    "water-interval": 1,
+    "plant-date": "03/01",
+    "indoor-plant-date": "01/15"
+  },
+  {
+    "name": "Garlic",
+    "id": 19,
+    "water-interval": 3,
+    "plant-date": "06/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Cantaloupe",
+    "id": 21,
+    "water-interval": 7,
+    "plant-date": "05/01",
+    "indoor-plant-date": "04/01"
+  },
+  {
+    "name": "Potatoes",
+    "id": 25,
+    "water-interval": 1,
+    "plant-date": "03/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Pumpkins",
+    "id": 26,
+    "water-interval": 1,
+    "plant-date": "04/15",
+    "indoor-plant-date": "05/15"
+  },
+  {
+    "name": "Peas",
+    "id": 23,
+    "water-interval": 3,
+    "plant-date": "03/15",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Radishes",
+    "id": 27,
+    "water-interval": 2,
+    "plant-date": "04/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Rhubarb",
+    "id": 28,
+    "water-interval": 2,
+    "plant-date": "04/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Spinach",
+    "id": 29,
+    "water-interval": 1,
+    "plant-date": "03/15",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Turnips",
+    "id": 32,
+    "water-interval": 7,
+    "plant-date": "04/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Summer Squash",
+    "id": 30,
+    "water-interval": 1,
+    "plant-date": "04/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Chard",
+    "id": 31,
+    "water-interval": 2,
+    "plant-date": "03/11",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Winter Squash",
+    "id": 34,
+    "water-interval": 1,
+    "plant-date": "21/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Thyme",
+    "id": 35,
+    "water-interval": 3,
+    "plant-date": "04/01",
+    "indoor-plant-date": "01/15"
+  },
+  {
+    "name": "Oregano",
+    "id": 36,
+    "water-interval": 7,
+    "plant-date": "04/15",
+    "indoor-plant-date": "01/15"
+  },
+  {
+    "name": "Rosemary",
+    "id": 37,
+    "water-interval": 3,
+    "plant-date": "04/15",
+    "indoor-plant-date": "01/15"
+  },
+  {
+    "name": "Okra",
+    "id": 43,
+    "water-interval": 5,
+    "plant-date": "05/01",
+    "indoor-plant-date": "03/15"
+  },
+  {
+    "name": "Sweet Potato",
+    "id": 44,
+    "water-interval": 1,
+    "plant-date": "05/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Parsley",
+    "id": 39,
+    "water-interval": 3,
+    "plant-date": "03/07",
+    "indoor-plant-date": "01/07"
+  },
+  {
+    "name": "Sage",
+    "id": 41,
+    "water-interval": 2,
+    "plant-date": "03/15",
+    "indoor-plant-date": "01/20"
+  },
+  {
+    "name": "Tarragon",
+    "id": 42,
+    "water-interval": 3,
+    "plant-date": "04/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Dill",
+    "id": 45,
+    "water-interval": 3,
+    "plant-date": "04/07",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Cauliflower",
+    "id": 11,
+    "water-interval": 4,
+    "plant-date": "04/15",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Beans",
+    "id": 6,
+    "water-interval": 1,
+    "plant-date": "04/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Collard Greens",
+    "id": 14,
+    "water-interval": 2,
+    "plant-date": "04/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Bell Peppers",
+    "id": 24,
+    "water-interval": 2,
+    "plant-date": "04/15",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Beets",
+    "id": 7,
+    "water-interval": 3,
+    "plant-date": "03/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Cilantro",
+    "id": 38,
+    "water-interval": 4,
+    "plant-date": "04/15",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Mint",
+    "id": 40,
+    "water-interval": 3,
+    "plant-date": "04/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Watermelon",
+    "id": 33,
+    "water-interval": 2,
+    "plant-date": "05/01",
+    "indoor-plant-date": "04/01"
+  },
+  {
+    "name": "Kale",
+    "id": 20,
+    "water-interval": 3,
+    "plant-date": "03/15",
+    "indoor-plant-date": "02/15"
+  },
+  {
+    "name": "Celery",
+    "id": 12,
+    "water-interval": 1,
+    "plant-date": "04/01",
+    "indoor-plant-date": "n/a"
+  },
+  {
+    "name": "Tomatoes",
+    "id": 1,
+    "water-interval": 1,
+    "plant-date": "04/15",
+    "indoor-plant-date": "02/15"
+  }
+]
+}
