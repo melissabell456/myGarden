@@ -5,3 +5,4 @@ dist/
 assets/css/
 lib/package-lock.json
 app/config/
+data/
