@@ -1,10 +1,11 @@
-<div id="heading">
-  <h1>myGarden</h1>
+<div id="gridContainer">  
+  <div id="header">
+    <h4>myGarden</h4>
+  </div>
+
+  <!-- different partials to display -->
+  <div id="alerts" ui-view="plant-alerts"></div>
+  <div id="activeGarden" ui-view="active-plants"></div>
+  <div id="search" class="search-grid" ui-view="search-plants"></div>
+  <div id="toPlant" ui-view="to-plant"></div>
 </div>
-<!-- different partials to display -->
-<div>
-  <div ui-view="active-plants"></div>
-  <div ui-view="to-plant"></div>
-  <div ui-view="search-plants"></div>
-  <div ui-view="plant-alerts"></div>
-</div>  

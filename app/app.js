@@ -4,8 +4,13 @@ angular.module("myGardenApp", ['ui.router'])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider
-    .state('home', {
+    .state('auth', {
       url: '/',
+      templateUrl: '/partials/user-auth.html',
+      controller: 'AuthCtrl'
+    })
+    .state('home', {
+      url: '/myGarden',
       views: {
         '': { templateUrl: '/partials/home.html' },
         'active-plants@home': { 
@@ -27,10 +32,10 @@ angular.module("myGardenApp", ['ui.router'])
       }
     });
   })
-  .run(Firebasecreds => {
-    let creds = Firebasecreds;
+  .run(fbCreds => {
+    let creds = fbCreds;
     let authConfig = {
-      apiKey: creds.key,
+      apiKey: creds.apiKey,
       authDomain: creds.authDomain
     };
     firebase.initializeApp(authConfig);
