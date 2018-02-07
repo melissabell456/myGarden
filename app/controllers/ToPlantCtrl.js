@@ -19,7 +19,8 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($scope, UserPla
         plantStats.sun_req = plantData.optimal_sun;
         plantStats.plant_date = plantData.when_to_plant;
         plantStats.img = plantData.image;
-        console.log("printer", plantStats);
+        // console.log("printer", plantStats);
+        $scope.plantArr.push(plantStats);
       });
     }
   });
