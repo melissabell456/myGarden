@@ -7,7 +7,6 @@ angular.module("myGardenApp").factory("HarvestHelperFctry", function($http, $q, 
       $http
       .get(`http://harvesthelper.herokuapp.com/api/v1/plants/${plantID}?api_key=${API_Key.harvestHelper}`)
       .then(({ data }) => {
-        console.log("returned from API", data);
         resolve(data);
       })
       .catch((err) => {

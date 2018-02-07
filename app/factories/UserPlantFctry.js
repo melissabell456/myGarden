@@ -21,14 +21,11 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
   };
 
   const getUserPlants = (uid, status) => {
-    console.log(uid);
-    console.log(status);
     let fbQuery = `${uid}_${status}`;
     return $q( (resolve, reject) => {
       $http
       .get(`${FBUrl}/user-plants.json?orderBy="status"&equalTo="${fbQuery}"`)
       .then( ({ data }) => {
-        console.log(data, "users plants");
         resolve(data);
       })
       .catch( (err) => {
