@@ -10,6 +10,6 @@ myGarden uses the harvest_helper API (https://github.com/damwhit/harvest_helper)
 2. `cd` into the `/lib` folder and run `npm install` to download all the required dependencies.
 3. API Keys - these will be added in app/config/api_keys.js as an object (format below) 
  + You will need to get an API key from harvest_helper to use any plant search/add functionality. Documentation for requesting an API key can be found at http://harvesthelper.herokuapp.com/
- + You will also need an API key and a firebase project in order to take advantage of the tracking shows feature. 
 
-<!-- to be continued -->
+
+to be continued
