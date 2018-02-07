@@ -1,9 +1,10 @@
-<!-- <h2>{{header}}</h2> -->
-<div class="plant-card" ng-repeat="plant in plantArr">
-  <p>{{plant.name}}</p>
-  <p>{{plant.sun_req}}</p>
-  <p>{{plant.plant_date}}</p>
-  <p>{{plant.notes}}</p>
-  <!-- <img src="{{plant.img}}"> -->
-  <button ng-click="addAsActive(plant.fbID)">Plant</button>
+<div class="row">
+  <div class="plant-card col" ng-repeat="plant in plantArr">
+    <img src="{{plant.img}}">
+    <h6>{{plant.name}}</h6>
+    <p>{{plant.sun_req}}</p>
+    <!-- <p>{{plant.plant_date}}</p> -->
+    <p>{{plant.notes}}</p>
+    <button ng-click="addAsActive(plant.fbID)">Plant</button>
+  </div>
 </div>

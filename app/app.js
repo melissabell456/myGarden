@@ -1,5 +1,17 @@
 "use strict";
 
+let isAuth = (AuthFctry, $window) =>
+new Promise((resolve, reject) => {
+  AuthFctry.isAuthenticated().then(userBool => {
+    if (userBool) {
+        resolve();
+    } else {
+        $window.location.href = "#!/home";
+        reject();
+    }
+  });
+});
+
 angular.module("myGardenApp", ['ui.router'])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
@@ -11,6 +23,7 @@ angular.module("myGardenApp", ['ui.router'])
     })
     .state('home', {
       url: '/myGarden',
+      resolve: { isAuth },
       views: {
         '': { templateUrl: '/partials/home.html' },
         'active-plants@home': { 

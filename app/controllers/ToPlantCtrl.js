@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("myGardenApp").controller("ToPlantCtrl", function($scope, UserPlantFctry, HarvestHelperFctry) {
+angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope, UserPlantFctry, HarvestHelperFctry) {
 
   let currentUser = firebase.auth().currentUser.uid;
   let status = "to-plant";
@@ -26,9 +26,13 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($scope, UserPla
 
   $scope.addAsActive = (plantFBID) => {
     let statusUpdate = {
-      status: `${currentUser}_active-plant`
+      status: `${currentUser}_active-plant`,
+      lastWaterDate: "n/a"
     };
-    UserPlantFctry.editUserPlant(plantFBID, statusUpdate);
+    UserPlantFctry.editUserPlant(plantFBID, statusUpdate)
+    .then( () => {
+      $state.reload('home');      
+    });
   };
 
 });

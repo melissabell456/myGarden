@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("myGardenApp").controller("PlantSearchCtrl", function($scope, PlantStatsFctry, HarvestHelperFctry, UserPlantFctry) {
+angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $scope, PlantStatsFctry, HarvestHelperFctry, UserPlantFctry) {
 
   // let uid = firebase.auth().currentUser.uid;
   $scope.header = "Plant Search";
@@ -24,9 +24,12 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($scope, Pla
       id: plant,
       uid: firebase.auth().currentUser.uid,
       status: `${firebase.auth().currentUser.uid}_to-plant`,
-      notes: "myPlant notes",
+      notes: "",
     };
-    UserPlantFctry.addToPlantList(plantToAdd);
+    UserPlantFctry.addToPlantList(plantToAdd)
+    .then( () => {
+      $state.reload('home');
+    });
   };
   
 });
