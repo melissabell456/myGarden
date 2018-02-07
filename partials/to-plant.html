@@ -1,8 +1,9 @@
 <!-- <h2>{{header}}</h2> -->
-<div ng-repeat="plant in plantArr">
+<div class="plant-card" ng-repeat="plant in plantArr">
   <p>{{plant.name}}</p>
   <p>{{plant.sun_req}}</p>
   <p>{{plant.plant_date}}</p>
   <p>{{plant.notes}}</p>
   <!-- <img src="{{plant.img}}"> -->
+  <button ng-click="addAsActive(plant.fbID)">Plant</button>
 </div>

@@ -9,9 +9,9 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($scope, UserPla
 
   UserPlantFctry.getUserPlants(currentUser, status)
   .then( (usersPlants) => {
-    // console.log(usersPlants, "shuold scope this");
     for (let plant in usersPlants) {
       let plantStats = {};
+      plantStats.fbID = plant;
       plantStats.notes = usersPlants[plant].notes;
       HarvestHelperFctry.searchByID(usersPlants[plant].id)
       .then( (plantData) => {
@@ -19,10 +19,16 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($scope, UserPla
         plantStats.sun_req = plantData.optimal_sun;
         plantStats.plant_date = plantData.when_to_plant;
         plantStats.img = plantData.image;
-        // console.log("printer", plantStats);
         $scope.plantArr.push(plantStats);
       });
     }
   });
+
+  $scope.addAsActive = (plantFBID) => {
+    let statusUpdate = {
+      status: `${currentUser}_active-plant`
+    };
+    UserPlantFctry.editUserPlant(plantFBID, statusUpdate);
+  };
 
 });

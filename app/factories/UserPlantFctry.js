@@ -34,6 +34,22 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
     });
   };
 
-  return { addToPlantList, getUserPlants };
+  const editUserPlant = (fbID, dataPatch) => {
+    console.log(fbID, dataPatch);
+    return $q( (resolve, reject) => {
+      $http
+      .patch(`${FBUrl}/user-plants/${fbID}.json`, 
+      JSON.stringify(dataPatch))
+      .then( (data) => {
+        console.log(data, "success?");
+        resolve(data);
+      })
+      .catch( (err) => {
+        console.log("no luck", err);
+      });
+    });
+  };
+
+  return { addToPlantList, getUserPlants, editUserPlant };
 
 });
