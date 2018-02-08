@@ -20,6 +20,7 @@
   "dependencies": {
     "@uirouter/angularjs": "^1.0.14",
     "angular": "^1.6.9",
+    "angular-moment-picker": "^0.10.2",
     "angular-route": "^1.6.8",
     "bootstrap": "^4.0.0",
     "firebase": "^4.9.1",
