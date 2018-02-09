@@ -10,7 +10,6 @@ angular.module("myGardenApp").factory("PlantStatsFctry", function($http, $q) {
       .then( ({ data }) => {
         let plant = Object.keys(data);
         let plantID = data[plant].id;
-        // console.log(plantID);
         resolve(plantID);
       })
       .catch( (err) => {
@@ -19,6 +18,19 @@ angular.module("myGardenApp").factory("PlantStatsFctry", function($http, $q) {
     });
   };
 
-  return { searchByName };
+  const searchByID = (plantID) => {
+    return $q( (resolve, reject) => {
+      $http
+      .get(`https://mygarden-f2283.firebaseio.com/plants.json?orderBy="id"&equalTo=${plantID}`)
+      .then( ( { data } ) => {
+        resolve(data);
+      })
+      .catch( (err) => {
+        console.log(err);
+      });
+    });
+  };
+
+  return { searchByName, searchByID };
 
 });

@@ -12,7 +12,7 @@ new Promise((resolve, reject) => {
   });
 });
 
-angular.module("myGardenApp", ['ui.router'])
+angular.module("myGardenApp", ['ui.router', 'moment-picker'])
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider

@@ -4,17 +4,25 @@
   <meta charset='UTF-8'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <!-- angular -->
   <script src="\lib\node_modules\angular\angular.min.js"></script>
   <script src="\lib\node_modules\@uirouter\angularjs\release\angular-ui-router.min.js"></script>
+  <!-- bootstrap -->
   <link rel="stylesheet" href="lib/node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/main.css">
   <!-- <script src="lib/node_modules/bootstrap/dist/js/bootstrap.min.js"></script> -->
+  <link rel="stylesheet" href="css/main.css">
+  <!-- angular moment datepicker-->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+  <script src="lib/node_modules/angular-moment-picker/dist/angular-moment-picker.min.js"></script>
+  <link href="lib/node_modules/angular-moment-picker/dist/angular-moment-picker.min.css" rel="stylesheet">
+
   <title>myGarden</title>
 </head>
 <body ng-app="myGardenApp">
-
-    <div ui-view></div>
-
+  
+  <div ui-view></div>
+  
   <script src="\lib\node_modules\firebase\firebase.js"></script>
   <script src='dist\project.js'></script>
 

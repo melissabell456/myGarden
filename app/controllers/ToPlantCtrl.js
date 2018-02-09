@@ -27,7 +27,7 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
   $scope.addAsActive = (plantFBID) => {
     let statusUpdate = {
       status: `${currentUser}_active-plant`,
-      lastWaterDate: "n/a"
+      lastWaterDate: moment().format('MM/DD/YYYY')
     };
     UserPlantFctry.editUserPlant(plantFBID, statusUpdate)
     .then( () => {
