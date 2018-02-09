@@ -5,13 +5,11 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
   const FBUrl = "https://mygarden-f2283.firebaseio.com";
 
   const addToPlantList = (plantObj) => {
-    console.log(plantObj);
     return $q( (resolve, reject) => {
       $http
       .post(`${FBUrl}/user-plants.json`,
       JSON.stringify(plantObj))
       .then( ({ data: {name} }) => {
-        console.log(name, "plant was added");
         resolve(name);
       })
       .catch( (err) => {
@@ -35,13 +33,11 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
   };
 
   const editUserPlant = (fbID, dataPatch) => {
-    console.log(fbID, dataPatch);
     return $q( (resolve, reject) => {
       $http
       .patch(`${FBUrl}/user-plants/${fbID}.json`, 
       JSON.stringify(dataPatch))
       .then( (data) => {
-        console.log(data, "success?");
         resolve(data);
       })
       .catch( (err) => {

@@ -10,9 +10,11 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
   $scope.searchDB = () => {
     // plant name is passed in to query firebase to gather plant id necessary to query API
     PlantStatsFctry.searchByName($scope.searchTerm)
-    .then((plantSearchResult) => {
+    .then((plantSearchResults) => {
       // request is sent to API to get only that plant ID's result
-      return HarvestHelperFctry.searchByID(plantSearchResult);
+      plantSearchResults.forEach( plant => {
+        return HarvestHelperFctry.searchByID(plant);
+      });
     })
     .then((dbResult) => {
       $scope.searchResult = dbResult;
