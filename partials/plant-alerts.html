@@ -1,5 +1,8 @@
-<h6>You need to water:</h6>
-<h6>Time to plant:</h6>
+<h6>Check soil moisture level:</h6>
 <div ng-repeat="plant in waterAlerts">
+  <p>{{plant.name}}</p>
+</div>
+<h6>Time to plant:</h6>
+<div ng-repeat="plant in plantAlerts">
   <p>{{plant.name}}</p>
 </div>
