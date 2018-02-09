@@ -4,27 +4,30 @@ angular.module("myGardenApp").controller("PlantAlertCtrl", function($scope, User
 
 
   let currentUser = firebase.auth().currentUser.uid;
-  let today = moment().format('MM/DD/YYYY');
+  // today's stats formatted for use with moment method .diff
+  let day = moment().format('DD');
+  let month = moment().format('MM');
+  let year = moment().format('YYYY');
+  let today = moment([+year, +month, +day]);
+  
+  // let today = moment().format('MM/DD/YYYY');
 
   // sends request to firebase for the current user's active plants
   UserPlantFctry.getUserPlants(currentUser, "active-plant")
   .then( (activePlants) => {
     // filters through active plants to determine which plants have not been watered today to send to database with additional data needed
     for (let plant in activePlants) {
-      let lastWatering = activePlants[plant].lastWaterDate;
-      if (lastWatering !== today) {
+      let waterMonth = +((activePlants[plant].lastWaterDate).slice(0,2));
+      let waterDay = +((activePlants[plant].lastWaterDate).slice(3,5));
+      let waterDate = moment([+year, +waterMonth, +waterDay]);
+      let daysSinceWatered = today.diff(waterDate, 'days');
+      if (daysSinceWatered > 0) {
         activePlants[plant].fbID = plant;
-        let lastWateringMoment = moment(activePlants[plant].lastWaterDate);
-        activePlants[plant].userWaterInt = convertDate(lastWateringMoment.from(today));
+        activePlants[plant].userWaterInt = daysSinceWatered;
         getPlantStats(activePlants[plant]);
       }
     }
   });
-
-  const convertDate = (momentStringDate) => {
-    let integerDateRange = momentStringDate.slice('')[0] === "a"? 1: +momentStringDate.slice(0,2); 
-    return integerDateRange;
-  };
   
   // takes object of plant which has not been watered today
   const getPlantStats = (userPlant) => {
@@ -41,29 +44,20 @@ angular.module("myGardenApp").controller("PlantAlertCtrl", function($scope, User
     });
   };
 
-  // gets today's stats formatted for use with moment methods 
-  let day = moment().format('DD');
-  let month = moment().format('MM');
-  let year = moment().format('YYYY');
-  let today2 = moment([+year, +month, +day]);
-  console.log(today2);
-
   // PLANTING TIME ALERTS
   // get user's to-plant plants
   UserPlantFctry.getUserPlants(currentUser, "to-plant")
   .then( (to_Plant) => {
-    // console.log(to_Plant, "plant these");
     $scope.plantAlerts = [];
     for (let plant in to_Plant) {
       return PlantStatsFctry.searchByID(to_Plant[plant].id)
       .then( (plantData) => {
         for (let plant in plantData) {
+          // formatting last entered water date for use with moment method .diff which returns number of days between two dates
           let plantMonth = +((plantData[plant].plant_date).slice(0,2));
           let plantDay = +((plantData[plant].plant_date).slice(3,5));
           let plantDate = moment([+year, +plantMonth, +plantDay]);
-          let daysUntilPlant = plantDate.diff(today2, 'days');
-          console.log(daysUntilPlant);
-          // the plant date is head of today 
+          let daysUntilPlant = plantDate.diff(today, 'days');
           if (daysUntilPlant <= 0) {
             console.log(plantData[plant].name, "has passed the suggested planting date");
             $scope.plantAlerts.push(plantData[plant]);
@@ -73,7 +67,5 @@ angular.module("myGardenApp").controller("PlantAlertCtrl", function($scope, User
     }
   });
 
-  // send ID's to firebase for plant dates
-  // compare today's date to plant date. if todays date > plant date, print alert
 
 });
