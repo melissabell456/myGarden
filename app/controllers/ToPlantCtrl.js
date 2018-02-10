@@ -35,4 +35,12 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
     });
   };
 
+  $scope.removePlant = (plant) => {
+    console.log(plant);
+    UserPlantFctry.removeUserPlant(plant)
+    .then( () => {
+      $state.reload();
+    });
+  };
+
 });
