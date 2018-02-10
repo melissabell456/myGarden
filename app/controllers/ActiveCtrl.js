@@ -33,4 +33,12 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     UserPlantFctry.editUserPlant(id, waterPatch);
   };
 
+  $scope.removePlant = (plant) => {
+    console.log(plant);
+    UserPlantFctry.removeUserPlant(plant)
+    .then( () => {
+      $state.reload();
+    });
+  };
+
 });
