@@ -6,6 +6,8 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
   $scope.header = "Plant Search";
   $scope.searchTerm = "";
 
+  // !!!!!need to add plant id in this function!!!!//
+
   // this function is triggered when user clicks Search btn
   $scope.searchDB = () => {
     $scope.searchResult= [];
@@ -17,6 +19,7 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
       plantSearchResults.forEach( plant => {
         return HarvestHelperFctry.searchByID(plant)
         .then((dbResult) => {
+          dbResult.id = dbResult.id;
           console.log("API result", dbResult);
           $scope.searchResult.push(dbResult);
         });
@@ -25,6 +28,7 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
   };
 
   $scope.addPlant = (plant) => {
+    console.log(plant, "this was clicked to add should have fbID");
     let plantToAdd = {
       id: plant,
       uid: firebase.auth().currentUser.uid,
