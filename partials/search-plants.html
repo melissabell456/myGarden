@@ -4,9 +4,19 @@
   <button ng-click="searchDB()">Search</button>
 </div>
 <div ng-repeat="plant in searchResult">
-  <p>{{plant.name}}</p>
+  <p class="plant-name">{{plant.name}}</p>
   <p>{{plant.optimal_sun}}</p>
-  <p>{{plant.when_to_plant}}</p>
-  <!-- <img src="{{searchResult.image}}"> -->
-  <button ng-click="addPlant(plant.id)">Add To Plant List</button>
+  <!-- <img class="plant-pic" src="{{searchResult.image}}"> -->
+  <!-- <div>
+    <p ng-mouseover="{{plant.when_to_plant}}">More Deets</p>
+    <p>{{plant.when_to_plant}}</p>
+  </div> -->
+  <div ng-mouseover="showPopover()" ng-mouseleave="hidePopover()">
+      more info
+    </div>
+    <div class="popover" ng-show="popoverIsVisible">{{plant.when_to_plant}}</div>
+    <div class="icon-field">
+        <img class="add-btn" ng-click="addPlant(plant.id)" src="../img/add-btn.png">
+    </div>   
+  <!-- <button ng-click="addPlant(plant.id)">Add To Plant List</button> -->
 </div>

@@ -15,20 +15,17 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
     PlantStatsFctry.searchByName($scope.searchTerm)
     .then((plantSearchResults) => {
       // request is sent to API to get only that plant ID's result
-      console.log("results from FB search", plantSearchResults);
       plantSearchResults.forEach( plant => {
         return HarvestHelperFctry.searchByID(plant)
         .then((dbResult) => {
-          dbResult.id = dbResult.id;
-          console.log("API result", dbResult);
           $scope.searchResult.push(dbResult);
         });
       });
     });
   };
 
+  // receives plant.ID of plant selected and adds user plant properties, then sends to patch to firebase user collection
   $scope.addPlant = (plant) => {
-    console.log(plant, "this was clicked to add should have fbID");
     let plantToAdd = {
       id: plant,
       uid: firebase.auth().currentUser.uid,
@@ -39,6 +36,14 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
     .then( () => {
       $state.reload('home');
     });
+  };
+
+  $scope.showPopover = () => {
+    $scope.popoverIsVisible = true; 
+  };
+  
+  $scope.hidePopover = () => {
+    $scope.popoverIsVisible = false;
   };
   
 });

@@ -4,30 +4,36 @@
   height: 100vh;
   width:  100vw;
   text-align: center;
+  background-color: #948570;
 }
 //main body structure
 #gridContainer {
+  background-color: #948570;
   display: grid;
   grid-template-columns: repeat(8, 4fr);
   grid-template-rows: repeat(8, 4fr);
-  grid-gap: .25em; 
-  padding: .25em;
+  grid-gap: .50em; 
+  padding: .50em;
   height: 100vh;
   width:  100vw;
   font-size: .5em;
 }
 
 #header {
-  border: solid black 1px;
   grid-column: 1/3;
   grid-row: 1/2;
   width: 100%;
   height: 100%;
   overflow: none;
+  background-color: #948570;
 }
 
+.plant-view {
+  background-color: white;
+}
+
+
 #activeGarden {
-  border: solid black 1px;
   grid-column: 3/9;
   grid-row: 1/7;
   width: 100%;
@@ -36,7 +42,6 @@
 }
 
 #alerts {
-  border: solid black 1px;
   grid-column: 1/3;
   grid-row: 2/7;
   width: 100%;
@@ -45,7 +50,6 @@
 }
 
 #search {
-  border: solid black 1px;
   grid-column: 1/3;
   grid-row: 7/9;
   width: 100%;
@@ -54,10 +58,8 @@
 }
 
 #toPlant {
-  // border: solid black 1px;
   grid-column: 3/9;
   grid-row: 7/9;
-  // border-radius: 25px;
   width: 100%;
   height: 100%;
   overflow: scroll;
@@ -66,20 +68,67 @@
 // individual plant card structure
 
 .plant-card {
-  border: solid black 1px;
-  height: 200px;
-  width: 300px;
-  margin: .20em;
+  height: 180px;
+  width: 120px;
+  margin: .5em;
+  padding: 0em;
+  border: .5px solid grey;
+  text-align: center;
 }
 
-img {
-  max-width: 100px;
-  height: 100px;
+.plant-pic {
+  object-fit: cover;
+  min-width: 100px;
+  max-height: 50px;
   margin: auto;
-  padding: .20em auto .20em 0;
+  padding: auto;
+  display: block;
+  clear: both;
 }
 
+.plant-name {
+  font-family: 'Six Caps', sans-serif;
+  color: whitesmoke;
+  margin-top: .3em;
+  margin-bottom: 0em;
+  margin-left: .5em;
+  margin-right: .5em;
+  padding: auto;
+  background-color: #504741;
+}
 .plant-card p {
   font-size: .75em;
   margin-bottom: 0em;
+  font-family: 'Assistant', sans-serif;
+}
+
+
+.icon-field {
+  display: block;
+}
+.delete-btn {
+  width: 10px;
+  float: right;
+  background-color: transparent;
+}
+
+.add-btn {
+  width: 10px;
+  background-color: transparent;
+  margin-left: auto;
+  margin-right: auto;
+  display: inherit;
+}
+
+// plant card pop-ups
+
+.popover {
+  position: absolute;
+  z-index: 100;
+  top:50%;
+  left:50%;
+  width:400px;
+  height:400px;
+  margin-left:-200px;
+  margin-top:-200px; 
 }

@@ -1,12 +1,14 @@
 <div class="row">
   <div class="plant-card col" ng-repeat="plant in plantArr">
-    <img src="{{plant.img}}">
-    <h6>{{plant.name}}</h6>
+    <div class="icon-field">
+        <img class="delete-btn" ng-click="removePlant(plant.fbID)" src="../img/delete-btn.png">
+    </div>    
+    <img class="plant-pic" src="{{plant.img}}">
+    <h6 class="plant-name">{{plant.name}}</h6>
     <p>{{plant.sun_req}}</p>
     <!-- <p>{{plant.plant_date}}</p> -->
     <p>Notes:</p>
     <p>{{plant.notes}}</p>
     <button ng-click="addAsActive(plant.fbID)">Plant</button>
-    <button ng-click="removePlant(plant.fbID)">Remove</button>
   </div>
 </div>
