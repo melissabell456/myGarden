@@ -1,7 +1,9 @@
 <div class="row">
-  <div class="plant-card col" ng-repeat="plant in plantArr">
+  <div class="plant-card col-2" ng-repeat="plant in plantArr">
     <div class="icon-field">
         <img class="delete-btn" ng-click="removePlant(plant.fbID)" src="../img/delete-btn.png">
+        <img class="shovel-icon" ng-show="plant.sowSeason" src="../img/shovel.png">
+        <img class="actionReq" ng-show="plant.sowSeason" src="../img/alert.png">
     </div>    
     <img class="plant-pic" src="{{plant.img}}">
     <h6 class="plant-name">{{plant.name}}</h6>

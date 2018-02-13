@@ -30,18 +30,18 @@ angular.module("myGardenApp", ['ui.router', 'moment-picker'])
           templateUrl: '/partials/active-garden.html',
           controller: 'ActiveCtrl'
         },
-        'to-plant@home': { 
-          templateUrl: '/partials/to-plant.html',
-          controller: 'ToPlantCtrl'
-        },
+        // 'to-plant@home': { 
+        //   templateUrl: '/partials/to-plant.html',
+        //   controller: 'ToPlantCtrl'
+        // },
         'search-plants@home': { 
           templateUrl: '/partials/search-plants.html',
           controller: 'PlantSearchCtrl'
-        },
-        'plant-alerts@home': { 
-          templateUrl: '/partials/plant-alerts.html',
-          controller: 'PlantAlertCtrl'
         }
+        // 'plant-alerts@home': { 
+        //   templateUrl: '/partials/plant-alerts.html',
+        //   controller: 'PlantAlertCtrl'
+        // }
       }
     });
   })

@@ -50,7 +50,7 @@ angular.module("myGardenApp").controller("PlantAlertCtrl", function($scope, User
   .then( (to_Plant) => {
     $scope.plantAlerts = [];
     for (let plant in to_Plant) {
-      return PlantStatsFctry.searchByID(to_Plant[plant].id)
+      PlantStatsFctry.searchByID(to_Plant[plant].id)
       .then( (plantData) => {
         for (let plant in plantData) {
           // formatting last entered water date for use with moment method .diff which returns number of days between two dates

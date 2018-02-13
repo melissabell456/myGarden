@@ -1,15 +1,46 @@
-<!-- <h2>{{header}}</h2> -->
+<input type="radio" name="active-plant" value="active-plant" ng-model="status"> Active
+<input type="radio" name="to-plant" value="to-plant" ng-model="status"> To-Plant
+<input type="radio" name="all" value="" ng-model="status"> All Plants
+
 <div class="row">
-  <div class="plant-card col-3" ng-repeat="plant in plantArr">
+  <div class="plant-card col-2" ng-repeat="plant in plantArr | filter: {status: status}">
+    <!-- icon field -->
     <div class="icon-field">
       <img class="delete-btn" ng-click="removePlant(plant.fbID)" src="../img/delete-btn.png">
+      <img class="water-icon" ng-show="plant.needsWatering" src="../img/water-drop.png">
+      <img class="shovel-icon" ng-show="plant.sowSeason" src="../img/shovel.png">
+      <img class="actionReq" ng-show="plant.needsWatering || plant.sowSeason" src="../img/alert.png">
     </div>
-      <img class="plant-pic" src="{{plant.img}}">
+
+    <img class="plant-pic" src="{{plant.img}}">
     <h6 class="plant-name">{{plant.name}}</h6>
-    <p>Log new water date:</p>
-    <input placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateWaterDate(newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="maxSelectDate">
-    <!-- <p>{{plant.water_req}}</p> -->
+    
+    <!-- if plant is active -->
+    <div ng-show="plant.status === 'active-plant'">
+      <p>Log new water date:</p>
+      <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateWaterDate(newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
+    </div>
     <p>Notes:</p>
     <p>{{plant.notes}}</p>
+    <p ng-click="showPopover(plant)">Get More Info</p>
+
+    <button ng-show="plant.status === 'to-plant'" ng-click="addAsActive(plant.fbID)">Plant</button>
+
   </div>
+</div>
+
+<div class="popover" ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
+    <img class="plant-pic" src="{{popoverPlant.img}}">
+    <h6 class="plant-name">{{popoverPlant.name}}</h6> 
+    <div ng-show="popoverPlant.status ==='active-plant'"> 
+      <p>Potential Pests: {{popoverPlant.pests}}</p>
+      <p>Potential Diseases: {{popoverPlant.diseases}}</p>
+      <p>Harvesting Considerations: {{popoverPlant.harvesting}}</p>
+      <p>Watering Considerations: {{popoverPlant.water_req}}</p>
+    </div>
+    <div ng-show="popoverPlant.status ==='to-plant'"> 
+      <p>Plant Date Considerations: {{popoverPlant.plant_date}}</p>
+      <p>Planting Location: {{popoverPlant.sun_req}}</p>
+      <p>Growing From Seed: {{popoverPlant.growing_from_seed}}</p>
+    </div>
 </div>

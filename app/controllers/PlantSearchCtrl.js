@@ -6,7 +6,6 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
   $scope.header = "Plant Search";
   $scope.searchTerm = "";
 
-  // !!!!!need to add plant id in this function!!!!//
 
   // this function is triggered when user clicks Search btn
   $scope.searchDB = () => {
@@ -30,7 +29,8 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
       id: plant,
       uid: firebase.auth().currentUser.uid,
       status: `${firebase.auth().currentUser.uid}_to-plant`,
-      notes: "",
+      status_id: "to-plant",
+      notes: ""
     };
     UserPlantFctry.addToPlantList(plantToAdd)
     .then( () => {
@@ -38,8 +38,9 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
     });
   };
 
-  $scope.showPopover = () => {
-    $scope.popoverIsVisible = true; 
+  $scope.showPopover = (plant) => {
+    $scope.popoverIsVisible = true;
+    $scope.popoverPlant = plant;
   };
   
   $scope.hidePopover = () => {

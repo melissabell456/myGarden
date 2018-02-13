@@ -6,7 +6,6 @@
   background-color: #948570; }
 
 #gridContainer {
-  background-color: #948570;
   display: grid;
   grid-template-columns: repeat(8, 4fr);
   grid-template-rows: repeat(8, 4fr);
@@ -17,42 +16,27 @@
   font-size: .5em; }
 
 #header {
-  grid-column: 1/3;
+  grid-column: 1/2;
   grid-row: 1/2;
-  width: 100%;
-  height: 100%;
-  overflow: none;
-  background-color: #948570; }
-
-.plant-view {
-  background-color: white; }
-
-#activeGarden {
-  grid-column: 3/9;
-  grid-row: 1/7;
-  width: 100%;
-  height: 100%;
-  overflow: scroll; }
-
-#alerts {
-  grid-column: 1/3;
-  grid-row: 2/7;
   width: 100%;
   height: 100%;
   overflow: none; }
 
 #search {
-  grid-column: 1/3;
-  grid-row: 7/9;
+  grid-column: 2/7;
+  grid-row: 1/2;
   width: 100%;
   height: 100%;
   overflow: none; }
 
-#toPlant {
-  grid-column: 3/9;
-  grid-row: 7/9;
-  width: 100%;
-  height: 100%;
+.plant-view {
+  background-color: #948570; }
+
+#activeGarden {
+  grid-column: 1/9;
+  grid-row: 2/9;
+  margin: 1em;
+  padding: 2em;
   overflow: scroll; }
 
 .plant-card {
@@ -61,16 +45,20 @@
   margin: .5em;
   padding: 0em;
   border: .5px solid grey;
-  text-align: center; }
+  text-align: center;
+  background-color: white; }
 
 .plant-pic {
   object-fit: cover;
-  min-width: 100px;
+  min-width: 95%;
   max-height: 50px;
   margin: auto;
   padding: auto;
   display: block;
   clear: both; }
+
+.water-date {
+  width: 90%; }
 
 .plant-name {
   font-family: 'Six Caps', sans-serif;
@@ -82,34 +70,63 @@
   padding: auto;
   background-color: #504741; }
 
+.search-result {
+  padding-top: auto;
+  padding-bottom: auto; }
+
+.search-result img {
+  width: 20px;
+  background-color: transparent; }
+
+.search-result-name {
+  font-family: 'Six Caps', sans-serif;
+  color: #504741;
+  margin-top: .3em;
+  margin-bottom: 0em;
+  margin-left: .5em;
+  margin-right: .5em;
+  padding: auto;
+  display: inline; }
+
 .plant-card p {
   font-size: .75em;
   margin-bottom: 0em;
   font-family: 'Assistant', sans-serif; }
 
 .icon-field {
-  display: block; }
+  display: block;
+  margin: .25em; }
 
 .delete-btn {
-  width: 10px;
+  width: 15px;
   float: right;
   background-color: transparent; }
 
-.add-btn {
-  width: 10px;
-  background-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
-  display: inherit; }
+.water-icon {
+  width: 15px;
+  float: right;
+  background-color: transparent; }
+
+.shovel-icon {
+  width: 15px;
+  float: right;
+  background-color: transparent; }
+
+.actionReq {
+  width: 15px;
+  float: right;
+  background-color: transparent; }
 
 .popover {
   position: absolute;
   z-index: 100;
   top: 50%;
   left: 50%;
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 300px;
   margin-left: -200px;
-  margin-top: -200px; }
+  margin-top: -200px;
+  overflow: scroll;
+  padding: 1em; }
 
 /*# sourceMappingURL=main.css.map */
