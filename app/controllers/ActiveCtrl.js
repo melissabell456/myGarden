@@ -117,18 +117,30 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 // REACTIONS TO USER INTERACTION
 
   // when user plants an unplanted plant, it gets added as active
-  
-  $scope.addAsActive = (plantFBID) => {
-    let statusUpdate = {
-      planted_date: $scope.todayDate,
-      status_id: "active-plant",
-      status: `${currentUser}_active-plant`,
-      lastWaterDate: moment().format('MM/DD/YYYY')
-    };
-    UserPlantFctry.editUserPlant(plantFBID, statusUpdate)
-    .then( () => {
-      $state.reload('home');      
-    });
+
+  $scope.changePlantStatus = (firebaseID, status) => {
+    console.log("firebae:", firebaseID, "status:", status);
+    let statusUpdate={};
+    if (status === "active-plant") {
+      statusUpdate = {
+        planted_date: $scope.todayDate,
+        status_id: "active-plant",
+        status: `${currentUser}_${status}`,
+        lastWaterDate: moment().format('MM/DD/YYYY')
+      };
+    }
+    else {
+      statusUpdate = {
+        archive_date: $scope.todayDate,
+        status_id: status,
+        status: `${currentUser}_${status}`
+      };
+    }
+    console.log(statusUpdate);
+    // UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
+    // .then( () => {
+    //   $state.reload('home');      
+    // });
   };
 
   // when user selects new water date, this patches user's last logged water date with update

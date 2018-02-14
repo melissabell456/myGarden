@@ -24,9 +24,9 @@
     </div>
 
     <!-- shows if plant is not yet planted -->
-    <button id="searchBtn" type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="addAsActive(plant.fbID)"><p class="btnTxt">Plant</p></button>
+    <button id="searchBtn" type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="changePlantStatus(plant.fbID, 'active-plant')"><p class="btnTxt">Plant</p></button>
     <!-- shows if plant has been planted -->
-    <!-- <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'active-plant'" ng-click="archivePlant(plant.fbID)"><p class="btnTxt">Archive</p></button> -->
+    <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'active-plant'" ng-click="changePlantStatus(plant.fbID, 'archived-plant')"><p class="btnTxt">Archive</p></button>
 
     <!-- shows for all cards, produces pop up window when clicked -->
     <p class="get-more-info" ng-click="showPopover(plant)">Get More Info</p>
