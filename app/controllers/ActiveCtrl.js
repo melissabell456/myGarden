@@ -131,9 +131,11 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   };
 
   // when user selects new water date, this patches user's last logged water date with update
-  $scope.updateWaterDate = (time, id) => {
-    let waterPatch = {lastWaterDate: time};
-    UserPlantFctry.editUserPlant(id, waterPatch)
+  $scope.updateUserPlant = (prop, newData, firebaseID) => {
+    console.log("key", prop, "patch", newData, "fbID", firebaseID);
+    let patch = {[prop]: newData};
+    console.log("patch", patch);
+    UserPlantFctry.editUserPlant(firebaseID, patch)
     .then( () => {
       $state.reload();
     });

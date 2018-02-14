@@ -2,7 +2,7 @@
 <input type="radio" name="to-plant" value="to-plant" ng-model="status"> To-Plant
 <input type="radio" name="all" value="" ng-model="status"> All Plants
 
-<div class="row">
+<div id="plantContainer" class="row">
   <div class="plant-card col-2" ng-repeat="plant in plantArr | filter: {status: status}">
 
 
@@ -14,19 +14,19 @@
       <img class="actionReq" ng-show="plant.needsWatering || plant.sowSeason" src="../img/alert.png">
     </div>
     <h6 class="plant-name">{{plant.name}}</h6>
-    <p ng-click="showNotePopUp(plant)">myNotes: {{plant.notes}}</p>
-    <!-- shows if plant is active -->
+    <p ng-click="showNotePopUp(plant)">Notes</p>
+    
+    <!-- displays if plant is active -->
     <div ng-show="plant.status === 'active-plant'">
       <p>Log new water date:</p>
-      <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateWaterDate(newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
+      <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateUserPlant('lastWaterDate', newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
     </div>
 
     <!-- shows for all cards, produces pop up window when clicked -->
     <p class="get-more-info" ng-click="showPopover(plant)">Get More Info</p>
 
     <!-- shows if plant is not yet planted -->
-    <button ng-show="plant.status === 'to-plant'" ng-click="addAsActive(plant.fbID)">Plant</button>
-
+    <button type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="addAsActive(plant.fbID)"><p class="btnTxt">Plant</p></button>
   </div>
 </div>
 
@@ -39,15 +39,14 @@
       <p>Potential Pests: {{popoverPlant.pests}}</p>
       <p>Potential Diseases: {{popoverPlant.diseases}}</p>
       <p>Harvesting Considerations: {{popoverPlant.harvesting}}</p>
-      <p>Watering Considerations: {{popoverPlant.water_req}}</p>
-      <!-- <p ng-click="showNotePopUp(popoverPlant)">myNotes: {{plant.notes}}</p>   -->
+      <p>Watering Considerations: {{popoverPlant.water_req}}</p>  
     </div>
     <div ng-show="popoverPlant.status ==='to-plant'"> 
       <p>Plant Date Considerations: {{popoverPlant.plant_date}}</p>
       <p>Planting Location: {{popoverPlant.sun_req}}</p>
       <p>Growing From Seed: {{popoverPlant.growing_from_seed}}</p>
-      <p>myNotes: {{plant.notes}}</p>  
     </div>
+    <p>My Notes: {{popoverPlant.notes}}</p>  
   </div>
 
 <!-- pop up for user notes -->
@@ -56,7 +55,7 @@
           <label for="comment">myNotes:</label>
           <textarea class="form-control" ng-model="popoverPlant.notes" rows="5" id="comment"></textarea>
         </div>
-    <button ng-click="updateUserNotes">Update</button>
+    <button ng-click="updateUserPlant('notes', popoverPlant.notes, popoverPlant.fbID)">Update</button>
   </div>
 
 

@@ -1,6 +1,7 @@
 <div id="searchField">
   <input id = "searchEntry" type="text" ng-model="searchTerm" placeholder="Search By Plant Name">
-  <button id="searchBtn" ng-click="searchDB()">Search</button>
+  <!-- <button id="searchBtn" ng-click="searchDB()">Search</button> -->
+  <button type="button" class="btn btn-outline-success" ng-click="searchDB()">Search</button>
 </div>
 
 <div ng-repeat="plant in searchResult">

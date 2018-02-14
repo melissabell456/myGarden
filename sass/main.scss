@@ -8,15 +8,20 @@
 }
 //main body structure
 
+body {
+  overflow: hidden;
+  padding: .5em;
+}
+
 #colorNavBar {
   width: 100%;
-  background-color: #72e572;
+  background-color: #28a745;
   height: 50px;
 }
 
 #logo {
   font-family: 'Aclonica', sans-serif;
-  color: #72e572;
+  color: #28a745;
 }
 
 #header {
@@ -39,48 +44,43 @@
   display: inline-block;
 }
 
-// .plant-view {
-//   background-color: #d3d3d3;
-// }
 
 #activeGarden {
-  // grid-column: 1/9;
-  // grid-row: 2/9;
-  margin: 1em;
-  padding: 2em;
+  // margin: 1em;
+  // padding: 2em;
   overflow: scroll;
-  background-color: #f2f2f2  
-  // border: 3px solid white;
-  // width: 100%;
-  // height: 100%;
+  background-color: #f2f2f2;
+  height: 70vh;
+  width: 98vw;
+  padding-left: 0em;
+  margin-left: 0em;
 }
 
-// #alerts {
-//   grid-column: 1/3;
-//   grid-row: 2/7;
-//   width: 100%;
-//   height: 100%;
-//   overflow: none;
-// }
-
-// #toPlant {
-//   grid-column: 1/9;
-//   grid-row: 7/9;
-//   width: 100%;
-//   height: 100%;
-//   overflow: scroll;
-// }
-
+#plantContainer {
+  padding: auto;
+}
 // individual plant card structure
 
 .plant-card {
   max-height: 200px;
+  min-height: 200px;
   max-width: 180px;
+  min-width: 180px;
   margin: .5em;
-  padding: 0em;
+  padding: 0em 0em .5em 0em;
   text-align: center;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.plant-card button {
+  height: 20px;
+}
+
+.plant-card .btnTxt {
+  font-size: .5rem;
+  // padding: auto;
+  margin: auto;
 }
 
 .plant-pic {
@@ -98,9 +98,6 @@
 }
 
 .plant-name {
-  // font-family: 'Six Caps', sans-serif;
-  // color: whitesmoke;
-  // background-color: #504741;
   margin-top: .3em;
   margin-bottom: 0em;
   margin-left: .5em;
