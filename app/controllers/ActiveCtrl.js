@@ -12,6 +12,9 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   let year = moment().format('YYYY');
   let today = moment([+year, +month, +day]);
 
+  $scope.setViewStatus = (status) => {
+    $scope.setStatus = status;
+  };
 // call to firebase to get the currently authenticated users active plants
   UserPlantFctry.getUserPlants(currentUser, "active-plant")
   // building objects with necessary user plant properties AND API properties for partial use
