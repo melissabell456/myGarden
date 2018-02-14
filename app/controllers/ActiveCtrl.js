@@ -117,6 +117,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 // REACTIONS TO USER INTERACTION
 
   // when user plants an unplanted plant, it gets added as active
+  
   $scope.addAsActive = (plantFBID) => {
     let statusUpdate = {
       planted_date: $scope.todayDate,

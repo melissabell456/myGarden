@@ -11,12 +11,8 @@ body {
 
 #colorNavBar {
   width: 100%;
-  background-color: #28a745;
+  background-color: #7fbf7f;
   height: 50px; }
-
-#logo {
-  font-family: 'Aclonica', sans-serif;
-  color: #28a745; }
 
 #header {
   width: 25%;
@@ -24,6 +20,10 @@ body {
   overflow: none;
   margin-right: 0em;
   display: inline-block; }
+
+#logo {
+  font-family: 'Aclonica', sans-serif;
+  color: #28a745; }
 
 #search {
   width: 100%;
@@ -37,7 +37,7 @@ body {
 
 #activeGarden {
   overflow: scroll;
-  background-color: #f2f2f2;
+  background-color: #f6f0e8;
   height: 70vh;
   width: 98vw;
   padding-left: 0em;
@@ -84,12 +84,13 @@ body {
   padding: auto; }
 
 .get-more-info {
-  color: whitesmoke;
-  background-color: #504741;
+  color: white;
+  background-color: #dfcaae;
   margin-top: .3em;
   margin-bottom: .5em;
   margin-left: .5em;
   margin-right: .5em;
+  text-shadow: 0.5px 0.5px 0.5px black;
   padding: auto; }
 
 .search-result {
