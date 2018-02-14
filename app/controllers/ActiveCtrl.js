@@ -12,9 +12,8 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   let year = moment().format('YYYY');
   let today = moment([+year, +month, +day]);
 
-  $scope.setViewStatus = (status) => {
-    $scope.setStatus = status;
-  };
+  // GETTING APPROPRIATE DATA
+
 // call to firebase to get the currently authenticated users active plants
   UserPlantFctry.getUserPlants(currentUser, "active-plant")
   // building objects with necessary user plant properties AND API properties for partial use
@@ -46,43 +45,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     }
   });
 
-  const needsWater = (plant) => {
-    let waterMonth = +((plant.lastWaterDate).slice(0,2));
-    let waterDay = +((plant.lastWaterDate).slice(3,5));
-    let waterMoment = moment([+year, +waterMonth, +waterDay]);
-    let daysSinceWatered = today.diff(waterMoment, 'days');
-    // each plant is sent to firebase dataset which includes watering requirements for plants.
-    return $q( (resolve, reject) => {
-      PlantStatsFctry.searchByID(plant.id)
-      .then ( (plantStats) => {
-          let reqWater = plantStats[Object.keys(plantStats)[0]].water_interval;
-          // if the user has not watered their plant for longer than the suggested frequency, this is resolved as true, else false
-          if (daysSinceWatered > reqWater) {
-            resolve(true);
-          }
-          else {
-            resolve(false);
-          }
-        });
-    });
-  };
-
-// called in response to calendar update, this patches user's last logged water date with selected date
-  $scope.updateWaterDate = (time, id) => {
-    let waterPatch = {lastWaterDate: time};
-    UserPlantFctry.editUserPlant(id, waterPatch)
-    .then( () => {
-      $state.reload();
-    });
-  };
-
-  $scope.removePlant = (plant) => {
-    UserPlantFctry.removeUserPlant(plant)
-    .then( () => {
-      $state.reload();
-    });
-  };
-
+// call to firebase to get the currently authenticated users unplanted plants
   UserPlantFctry.getUserPlants(currentUser, "to-plant")
   .then( (usersPlants) => {
     // loops through all plants to begin building a plantStats object including necessary properties needed from user and from Harvest Helper API for this category of plant
@@ -107,6 +70,30 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     }
   });
 
+
+// DETERMINE PLANT NEEDS
+
+  const needsWater = (plant) => {
+    let waterMonth = +((plant.lastWaterDate).slice(0,2));
+    let waterDay = +((plant.lastWaterDate).slice(3,5));
+    let waterMoment = moment([+year, +waterMonth, +waterDay]);
+    let daysSinceWatered = today.diff(waterMoment, 'days');
+    // each plant is sent to firebase dataset which includes watering requirements for plants.
+    return $q( (resolve, reject) => {
+      PlantStatsFctry.searchByID(plant.id)
+      .then ( (plantStats) => {
+          let reqWater = plantStats[Object.keys(plantStats)[0]].water_interval;
+          // if the user has not watered their plant for longer than the suggested frequency, this is resolved as true, else false
+          if (daysSinceWatered > reqWater) {
+            resolve(true);
+          }
+          else {
+            resolve(false);
+          }
+        });
+    });
+  };
+
   const plantSeason = (plantID) => {
     return $q( (resolve, reject) => {
       PlantStatsFctry.searchByID(plantID)
@@ -126,6 +113,10 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     });
   };
 
+
+// REACTIONS TO USER INTERACTION
+
+  // when user plants an unplanted plant, it gets added as active
   $scope.addAsActive = (plantFBID) => {
     let statusUpdate = {
       planted_date: $scope.todayDate,
@@ -139,6 +130,16 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     });
   };
 
+  // when user selects new water date, this patches user's last logged water date with update
+  $scope.updateWaterDate = (time, id) => {
+    let waterPatch = {lastWaterDate: time};
+    UserPlantFctry.editUserPlant(id, waterPatch)
+    .then( () => {
+      $state.reload();
+    });
+  };
+
+    // when user selects to remove a plant, this permanently removes user plant
   $scope.removePlant = (plant) => {
     console.log(plant);
     UserPlantFctry.removeUserPlant(plant)
@@ -147,6 +148,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     });
   };
 
+  // when user clicks to view more information on a certain plant, these show/hide pop-ups 
   $scope.showPopover = (plant) => {
     console.log(plant);
     $scope.popoverIsVisible = true;
@@ -155,6 +157,13 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   
   $scope.hidePopover = () => {
     $scope.popoverIsVisible = false;
+    $scope.notePopoverIsVisible = false;
+  };
+
+  $scope.showNotePopUp = (plant) => {
+    console.log(plant);
+    $scope.notePopoverIsVisible = true;
+    $scope.popoverPlant = plant;
   };
 
 });
