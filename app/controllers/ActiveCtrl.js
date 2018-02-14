@@ -116,10 +116,9 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 
 // REACTIONS TO USER INTERACTION
 
-  // when user plants an unplanted plant, it gets added as active
+  // when user "plants" an unplanted plant or archives an existing plant, the status gets updated in firebase and additional properties are added to plant objects
 
   $scope.changePlantStatus = (firebaseID, status) => {
-    console.log("firebae:", firebaseID, "status:", status);
     let statusUpdate={};
     if (status === "active-plant") {
       statusUpdate = {
@@ -136,11 +135,10 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
         status: `${currentUser}_${status}`
       };
     }
-    console.log(statusUpdate);
-    // UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
-    // .then( () => {
-    //   $state.reload('home');      
-    // });
+    UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
+    .then( () => {
+      $state.reload('home');      
+    });
   };
 
   // when user selects new water date, this patches user's last logged water date with update
@@ -180,5 +178,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     $scope.notePopoverIsVisible = true;
     $scope.popoverPlant = plant;
   };
+
+
 
 });

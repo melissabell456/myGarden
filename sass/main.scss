@@ -15,7 +15,7 @@ body {
 
 #colorNavBar {
   width: 100%;
-  background-color: #7fbf7f;
+  background-color: #329932;
   height: 50px;
 }
 
@@ -102,8 +102,8 @@ body {
 // individual plant card structure
 
 .plant-card {
-  max-height: 200px;
-  min-height: 200px;
+  max-height: 230px;
+  min-height: 230px;
   max-width: 180px;
   min-width: 180px;
   margin: .5em;
@@ -157,7 +157,7 @@ body {
 
 
 .plant-card p {
-  font-size: .75em;
+  font-size: .60em;
   margin-bottom: 0em;
   font-family: 'Assistant', sans-serif;
 }

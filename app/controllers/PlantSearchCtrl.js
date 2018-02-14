@@ -18,6 +18,7 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
         return HarvestHelperFctry.searchByID(plant)
         .then((dbResult) => {
           $scope.searchResult.push(dbResult);
+          $scope.resultDisplay = true;
         });
       });
     });

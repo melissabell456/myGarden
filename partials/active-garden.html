@@ -1,5 +1,6 @@
 <input type="radio" name="active-plant" value="active-plant" ng-model="status"> Active
 <input type="radio" name="to-plant" value="to-plant" ng-model="status"> To-Plant
+<input type="radio" name="archived" value="archived-plant" ng-model="status"> Archived Plants
 <input type="radio" name="all" value="" ng-model="status"> All Plants
 
 <div id="plantContainer" class="row">
@@ -19,8 +20,9 @@
     </div>  
     <!-- displays if plant is active -->
     <div ng-show="plant.status === 'active-plant'">
+      <p>Last water date: {{plant.water_date}}</p>
       <p>Log new water date:</p>
-      <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateUserPlant('lastWaterDate', newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
+        <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateUserPlant('lastWaterDate', newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
     </div>
 
     <!-- shows if plant is not yet planted -->
