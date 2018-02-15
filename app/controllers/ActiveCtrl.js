@@ -21,6 +21,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
       plantStats.status = userPlants[plant].status_id;
       plantStats.fbID = plant;
       plantStats.notes = userPlants[plant].notes;
+      plantStats.userPlant_date = userPlants[plant].plant_date;
       if (plantStats.status === "active-plant") {
         plantStats.water_date = userPlants[plant].lastWaterDate;        
         needsWater(userPlants[plant])
