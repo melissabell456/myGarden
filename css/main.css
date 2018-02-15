@@ -1,9 +1,18 @@
-#authPg {
-  border: 1px solid black;
-  height: 100vh;
-  width: 100vw;
-  text-align: center;
-  background-color: #948570; }
+#authPage {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw; }
+
+#authElements {
+  grid-column: 2/3;
+  grid-row: 2/3; }
+
+#authPage button {
+  width: 95%; }
 
 body {
   overflow: hidden;
