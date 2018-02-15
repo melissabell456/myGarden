@@ -12,64 +12,61 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   let year = moment().format('YYYY');
   let today = moment([+year, +month, +day]);
 
-  // GETTING APPROPRIATE DATA
+  
+// BUILDING USER PLANT OBJECTS FOR USE IN PARTIAL
 
-// call to firebase to get the currently authenticated users active plants
-  UserPlantFctry.getUserPlants(currentUser, "active-plant")
-  // building objects with necessary user plant properties AND API properties for partial use
-  .then( (usersPlants) => {
-    // first getting users plants
-    for (let plant in usersPlants) {
+  // gets current user's plants
+  UserPlantFctry.getAllUserPlants(currentUser)
+  .then( (userPlants) => {
+    for (let plant in userPlants) {
+      // build plantStats object with user specific properties recieved from firebase
       let plantStats = {};
-      // each plant is resolved true or false after comparing # days since last water and water frequency requirement from firebase data set
-      needsWater(usersPlants[plant])
-      .then( (bool) => {
-        plantStats.needsWatering = bool;
-        plantStats.fbID = plant;
-        plantStats.water_date = usersPlants[plant].lastWaterDate;
-        plantStats.notes = usersPlants[plant].notes;
-        plantStats.status = usersPlants[plant].status_id;
-        // each plant is then queried to receive additional plant properties
-        return HarvestHelperFctry.searchByID(usersPlants[plant].id);
-      })
-      .then( (plantData) => {
-        plantStats.name = plantData.name;
-        plantStats.water_req = plantData.watering;
-        plantStats.img = plantData.image;
-        plantStats.pests = plantData.pests;
-        plantStats.diseases = plantData.diseases;
-        plantStats.harvesting = plantData.harvesting;
-        // plantStats is fully built including user's data, water requirement bool, and API information which is then pushed to array for use in partial
-        $scope.plantArr.push(plantStats);
-      });
+      plantStats.status = userPlants[plant].status_id;
+      plantStats.fbID = plant;
+      plantStats.notes = userPlants[plant].notes;
+      plantStats.userPlant_date = userPlants[plant].planted_date;
+      if (plantStats.status === "active-plant") {
+        plantStats.water_date = userPlants[plant].lastWaterDate;
+        // sending active plant to determine whether the plant has surpassed recommended watering parameters 
+        needsWater(userPlants[plant])
+        .then( (bool) => {
+          // after water recommendations are determined, adding needsWatering boolean as property on plantStats obj 
+          plantStats.needsWatering = bool;
+          return HarvestHelperFctry.searchByID(userPlants[plant].id);
+        })
+        .then ( (apiData) => {
+          // adding properties on plantStats obj from API data
+          plantStats.name = apiData.name;
+          plantStats.water_req = apiData.watering;
+          plantStats.img = apiData.image;
+          plantStats.pests = apiData.pests;
+          plantStats.diseases = apiData.diseases;
+          plantStats.harvesting = apiData.harvesting;
+          // pushes final object to array for use in partial
+          $scope.plantArr.push(plantStats);
+        });
+      }
+      else {
+        // if plant is not active status, the plant is checked to see if it has surpassed recommended planting date
+        needsPlanting(userPlants[plant].id)
+        .then( (bool) => {
+          // after planting recommendation is determined, adds property to plantStats obj
+          plantStats.sowSeason = bool;
+          return HarvestHelperFctry.searchByID(userPlants[plant].id);
+        })
+        .then ( (apiData) => {
+          // continues to build up object with APIdata
+          plantStats.name = apiData.name;
+          plantStats.sun_req = apiData.optimal_sun;
+          plantStats.plant_date = apiData.when_to_plant;
+          plantStats.growing_from_seed = apiData.growing_from_seed;
+          plantStats.img = apiData.image;
+          // pushes final object to array for use in partial
+          $scope.plantArr.push(plantStats);
+        });
+      }
     }
   });
-
-// call to firebase to get the currently authenticated users unplanted plants
-  UserPlantFctry.getUserPlants(currentUser, "to-plant")
-  .then( (usersPlants) => {
-    // loops through all plants to begin building a plantStats object including necessary properties needed from user and from Harvest Helper API for this category of plant
-    for (let plant in usersPlants) {
-      let plantStats = {};
-      plantSeason(usersPlants[plant].id)
-      .then( (bool) => {
-        plantStats.sowSeason = bool;
-        plantStats.fbID = plant;
-        plantStats.status = usersPlants[plant].status_id;
-        plantStats.notes = usersPlants[plant].notes;
-        return HarvestHelperFctry.searchByID(usersPlants[plant].id);  
-      })
-      .then( (plantData) => {
-        plantStats.name = plantData.name;
-        plantStats.sun_req = plantData.optimal_sun;
-        plantStats.plant_date = plantData.when_to_plant;
-        plantStats.growing_from_seed = plantData.growing_from_seed;
-        plantStats.img = plantData.image;
-        $scope.plantArr.push(plantStats);
-      });
-    }
-  });
-
 
 // DETERMINE PLANT NEEDS
 
@@ -94,7 +91,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     });
   };
 
-  const plantSeason = (plantID) => {
+  const needsPlanting = (plantID) => {
     return $q( (resolve, reject) => {
       PlantStatsFctry.searchByID(plantID)
       .then ( (plantStats) => {
@@ -143,9 +140,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 
   // when user selects new water date, this patches user's last logged water date with update
   $scope.updateUserPlant = (prop, newData, firebaseID) => {
-    console.log("key", prop, "patch", newData, "fbID", firebaseID);
     let patch = {[prop]: newData};
-    console.log("patch", patch);
     UserPlantFctry.editUserPlant(firebaseID, patch)
     .then( () => {
       $state.reload();
@@ -154,7 +149,6 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 
     // when user selects to remove a plant, this permanently removes user plant
   $scope.removePlant = (plant) => {
-    console.log(plant);
     UserPlantFctry.removeUserPlant(plant)
     .then( () => {
       $state.reload();
@@ -163,7 +157,6 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 
   // when user clicks to view more information on a certain plant, these show/hide pop-ups 
   $scope.showPopover = (plant) => {
-    console.log(plant);
     $scope.popoverIsVisible = true;
     $scope.popoverPlant = plant;
   };
@@ -174,7 +167,6 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   };
 
   $scope.showNotePopUp = (plant) => {
-    console.log(plant);
     $scope.notePopoverIsVisible = true;
     $scope.popoverPlant = plant;
   };

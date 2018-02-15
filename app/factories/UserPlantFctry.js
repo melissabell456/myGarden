@@ -18,11 +18,10 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
     });
   };
 
-  const getUserPlants = (uid, status) => {
-    let fbQuery = `${uid}_${status}`;
+  const getAllUserPlants = (uid) => {
     return $q( (resolve, reject) => {
       $http
-      .get(`${FBUrl}/user-plants.json?orderBy="status"&equalTo="${fbQuery}"`)
+      .get(`${FBUrl}/user-plants.json?orderBy="uid"&equalTo="${uid}"`)
       .then( ({ data }) => {
         resolve(data);
       })
@@ -59,6 +58,6 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
     });
   };
 
-  return { addToPlantList, getUserPlants, editUserPlant, removeUserPlant };
+  return { addToPlantList, editUserPlant, removeUserPlant, getAllUserPlants };
 
 });
