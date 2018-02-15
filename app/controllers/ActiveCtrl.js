@@ -27,72 +27,99 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
         .then( (bool) => {
           plantStats.needsWatering = bool;
           console.log("should have status,fbid,plantStats,water_date, waterbool", plantStats);
+          return HarvestHelperFctry.searchByID(userPlants[plant].id);
           // closing .then for needsWater
+        })
+        .then ( (apiData) => {
+          plantStats.name = apiData.name;
+          plantStats.water_req = apiData.watering;
+          plantStats.img = apiData.image;
+          plantStats.pests = apiData.pests;
+          plantStats.diseases = apiData.diseases;
+          plantStats.harvesting = apiData.harvesting;
+          $scope.plantArr.push(plantStats);
         });
       // closing if statement
       }
-      // else (
-
-      // )
-// closing for in of userPlants
+      else {
+        needsPlanting(userPlants[plant].id)
+        .then( (bool) => {
+          plantStats.sowSeason = bool;  
+          console.log("should have status,fbid,plantStats,water_date, sowbool", plantStats);
+          return HarvestHelperFctry.searchByID(userPlants[plant].id);
+          // closing .then for needsPlanting
+        })
+        .then ( (apiData) => {
+          plantStats.name = apiData.name;
+          plantStats.sun_req = apiData.optimal_sun;
+          plantStats.plant_date = apiData.when_to_plant;
+          plantStats.growing_from_seed = apiData.growing_from_seed;
+          plantStats.img = apiData.image;
+          console.log("full obj", plantStats);
+          $scope.plantArr.push(plantStats);
+        // closing .then for API data
+        });
+      // closing else
+      }
+    // closing for in of userPlants
     }
   });
 
-// call to firebase to get the currently authenticated users active plants
-  UserPlantFctry.getUserPlants(currentUser, "active-plant")
-  // building objects with necessary user plant properties AND API properties for partial use
-  .then( (usersPlants) => {
-    // first getting users plants
-    for (let plant in usersPlants) {
-      let plantStats = {};
-      // each plant is resolved true or false after comparing # days since last water and water frequency requirement from firebase data set
-      needsWater(usersPlants[plant])
-      .then( (bool) => {
-        plantStats.needsWatering = bool;
-        plantStats.fbID = plant;
-        plantStats.water_date = usersPlants[plant].lastWaterDate;
-        plantStats.notes = usersPlants[plant].notes;
-        plantStats.status = usersPlants[plant].status_id;
-        // each plant is then queried to receive additional plant properties
-        return HarvestHelperFctry.searchByID(usersPlants[plant].id);
-      })
-      .then( (plantData) => {
-        plantStats.name = plantData.name;
-        plantStats.water_req = plantData.watering;
-        plantStats.img = plantData.image;
-        plantStats.pests = plantData.pests;
-        plantStats.diseases = plantData.diseases;
-        plantStats.harvesting = plantData.harvesting;
-        // plantStats is fully built including user's data, water requirement bool, and API information which is then pushed to array for use in partial
-        $scope.plantArr.push(plantStats);
-      });
-    }
-  });
+// // call to firebase to get the currently authenticated users active plants
+//   UserPlantFctry.getUserPlants(currentUser, "active-plant")
+//   // building objects with necessary user plant properties AND API properties for partial use
+//   .then( (usersPlants) => {
+//     // first getting users plants
+//     for (let plant in usersPlants) {
+//       let plantStats = {};
+//       // each plant is resolved true or false after comparing # days since last water and water frequency requirement from firebase data set
+//       needsWater(usersPlants[plant])
+//       .then( (bool) => {
+//         plantStats.needsWatering = bool;
+//         plantStats.fbID = plant;
+//         plantStats.water_date = usersPlants[plant].lastWaterDate;
+//         plantStats.notes = usersPlants[plant].notes;
+//         plantStats.status = usersPlants[plant].status_id;
+//         // each plant is then queried to receive additional plant properties
+//         return HarvestHelperFctry.searchByID(usersPlants[plant].id);
+//       })
+//       .then( (plantData) => {
+//         plantStats.name = plantData.name;
+//         plantStats.water_req = plantData.watering;
+//         plantStats.img = plantData.image;
+//         plantStats.pests = plantData.pests;
+//         plantStats.diseases = plantData.diseases;
+//         plantStats.harvesting = plantData.harvesting;
+//         // plantStats is fully built including user's data, water requirement bool, and API information which is then pushed to array for use in partial
+//         $scope.plantArr.push(plantStats);
+//       });
+//     }
+//   });
 
-// call to firebase to get the currently authenticated users unplanted plants
-  UserPlantFctry.getUserPlants(currentUser, "to-plant")
-  .then( (usersPlants) => {
-    // loops through all plants to begin building a plantStats object including necessary properties needed from user and from Harvest Helper API for this category of plant
-    for (let plant in usersPlants) {
-      let plantStats = {};
-      plantSeason(usersPlants[plant].id)
-      .then( (bool) => {
-        plantStats.sowSeason = bool;
-        plantStats.fbID = plant;
-        plantStats.status = usersPlants[plant].status_id;
-        plantStats.notes = usersPlants[plant].notes;
-        return HarvestHelperFctry.searchByID(usersPlants[plant].id);  
-      })
-      .then( (plantData) => {
-        plantStats.name = plantData.name;
-        plantStats.sun_req = plantData.optimal_sun;
-        plantStats.plant_date = plantData.when_to_plant;
-        plantStats.growing_from_seed = plantData.growing_from_seed;
-        plantStats.img = plantData.image;
-        $scope.plantArr.push(plantStats);
-      });
-    }
-  });
+// // call to firebase to get the currently authenticated users unplanted plants
+//   UserPlantFctry.getUserPlants(currentUser, "to-plant")
+//   .then( (usersPlants) => {
+//     // loops through all plants to begin building a plantStats object including necessary properties needed from user and from Harvest Helper API for this category of plant
+//     for (let plant in usersPlants) {
+//       let plantStats = {};
+//       needsPlanting(usersPlants[plant].id)
+//       .then( (bool) => {
+//         plantStats.sowSeason = bool;
+//         plantStats.fbID = plant;
+//         plantStats.status = usersPlants[plant].status_id;
+//         plantStats.notes = usersPlants[plant].notes;
+//         return HarvestHelperFctry.searchByID(usersPlants[plant].id); 
+//       })
+//       .then( (plantData) => {
+//         plantStats.name = plantData.name;
+//         plantStats.sun_req = plantData.optimal_sun;
+//         plantStats.plant_date = plantData.when_to_plant;
+//         plantStats.growing_from_seed = plantData.growing_from_seed;
+//         plantStats.img = plantData.image;
+//         $scope.plantArr.push(plantStats);
+//       });
+//     }
+//   });
 
 
 // DETERMINE PLANT NEEDS
@@ -118,7 +145,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     });
   };
 
-  const plantSeason = (plantID) => {
+  const needsPlanting = (plantID) => {
     return $q( (resolve, reject) => {
       PlantStatsFctry.searchByID(plantID)
       .then ( (plantStats) => {
