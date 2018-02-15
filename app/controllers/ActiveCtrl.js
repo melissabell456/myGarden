@@ -14,6 +14,30 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 
   // GETTING APPROPRIATE DATA
 
+  UserPlantFctry.getAllUserPlants(currentUser)
+  .then( (userPlants) => {
+    for (let plant in userPlants) {
+      let plantStats = {};
+      plantStats.status = userPlants[plant].status_id;
+      plantStats.fbID = plant;
+      plantStats.notes = userPlants[plant].notes;
+      if (plantStats.status === "active-plant") {
+        plantStats.water_date = userPlants[plant].lastWaterDate;        
+        needsWater(userPlants[plant])
+        .then( (bool) => {
+          plantStats.needsWatering = bool;
+          console.log("should have status,fbid,plantStats,water_date, waterbool", plantStats);
+          // closing .then for needsWater
+        });
+      // closing if statement
+      }
+      // else (
+
+      // )
+// closing for in of userPlants
+    }
+  });
+
 // call to firebase to get the currently authenticated users active plants
   UserPlantFctry.getUserPlants(currentUser, "active-plant")
   // building objects with necessary user plant properties AND API properties for partial use

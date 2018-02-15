@@ -32,6 +32,19 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
     });
   };
 
+  const getAllUserPlants = (uid) => {
+    return $q( (resolve, reject) => {
+      $http
+      .get(`${FBUrl}/user-plants.json?orderBy="uid"&equalTo="${uid}"`)
+      .then( ({ data }) => {
+        resolve(data);
+      })
+      .catch( (err) => {
+        console.log("could not retrieve user plants", err);
+      });
+    });
+  };
+
   const removeUserPlant = (firebaseID) => {
     return $q( (resolve, reject) => {
       $http
@@ -59,6 +72,6 @@ angular.module("myGardenApp").factory("UserPlantFctry", function($http, $q) {
     });
   };
 
-  return { addToPlantList, getUserPlants, editUserPlant, removeUserPlant };
+  return { addToPlantList, getUserPlants, editUserPlant, removeUserPlant, getAllUserPlants };
 
 });
