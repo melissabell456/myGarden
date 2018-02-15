@@ -16,15 +16,23 @@
     </div>
     <div>
       <h5 class="plant-name">{{plant.name}}</h5>
-      <p ng-click="showNotePopUp(plant)">Notes</p>
+      <p ng-click="showNotePopUp(plant)">View/Edit Notes</p>
     </div>  
-    <!-- displays if plant is active -->
+
+<!-- PLANT STATS TO SHOW ON LOAD -->
+
+  <!-- displays if plant is active -->
     <div ng-show="plant.status === 'active-plant'">
-      <!-- <p>Last water date: {{plant.water_date}}</p> -->
       <p>Last Water Date:</p>
         <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateUserPlant('lastWaterDate', newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
     </div>
+  
+  <!-- displays if plant is archived -->
+    <div ng-show="plant.status === 'archived-plant'">
+      <p>Last Plant Date: {{plant.userPlant_date}}</p>
+    </div>
 
+<!-- BTNS -->
     <!-- shows if plant is not yet planted -->
     <button type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="changePlantStatus(plant.fbID, 'active-plant')">Plant</button>
     <!-- shows if plant has been planted -->
@@ -50,7 +58,7 @@
       <p>Harvesting Considerations: {{popoverPlant.harvesting}}</p>
       <p>Watering Considerations: {{popoverPlant.water_req}}</p>  
     </div>
-    <div ng-show="popoverPlant.status ==='to-plant'"> 
+    <div ng-show="popoverPlant.status ==='to-plant' || 'archived-plant'"> 
       <p>Plant Date Considerations: {{popoverPlant.plant_date}}</p>
       <p>Planting Location: {{popoverPlant.sun_req}}</p>
       <p>Growing From Seed: {{popoverPlant.growing_from_seed}}</p>
@@ -60,11 +68,14 @@
 
 <!-- pop up for user notes -->
   <div class="popover" ng-show="notePopoverIsVisible" ng-mouseleave="hidePopover()">
-      <div class="form-group">
-          <label for="comment">myNotes:</label>
-          <textarea class="form-control" ng-model="popoverPlant.notes" rows="5" id="comment"></textarea>
-        </div>
-    <button ng-click="updateUserPlant('notes', popoverPlant.notes, popoverPlant.fbID)">Update</button>
+    <div class="icon-field">
+      <img class="delete-btn" ng-click="hidePopover()" src="../img/delete-btn.png">
+    </div>
+    <div class="form-group">
+        <label for="comment">myNotes:</label>
+        <textarea class="form-control" ng-model="popoverPlant.notes" rows="5" id="comment"></textarea>
+    </div>
+    <button type="button" class="btn btn-success btn-sm" ng-click="updateUserPlant('notes', popoverPlant.notes, popoverPlant.fbID)">Update Notes</button>
   </div>
 
 
