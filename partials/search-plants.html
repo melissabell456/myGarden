@@ -3,7 +3,7 @@
   <button type="button" class="btn btn-outline-success" ng-click="searchDB()">Search</button>
 <!-- </div> -->
 
-<div class="popover" ng-show="resultDisplay">
+<div class="popover" ng-show="resultDisplay" ng-mouseleave="hidePopover()">
   <div ng-repeat="plant in searchResult">
     
     <div class="search-result">
@@ -14,10 +14,7 @@
 </div>
 
   <!-- pop up -->
-  <div class="popover" ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
-    <div class="icon-field">
-        <img class="add-btn" ng-click="addPlant(popoverPlant.id)" src="../img/add-btn.png">
-    </div>
+  <div ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
     <img class="plant-pic" src="{{popoverPlant.image}}">
     <h6 class="plant-name">{{popoverPlant.name}}</h6>  
     <p>Suggested Planting Time: {{popoverPlant.when_to_plant}}</p>

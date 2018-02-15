@@ -34,12 +34,14 @@ body {
 #search {
   float: right; }
 
+.search-result {
+  font-family: 'Merriweather', serif; }
+
 .search-result img {
   width: 20px;
   background-color: transparent; }
 
 .search-result-name {
-  font-family: 'Six Caps', sans-serif;
   color: #504741;
   margin-top: .3em;
   margin-bottom: 0em;
@@ -60,18 +62,19 @@ body {
   padding: auto; }
 
 .plant-card {
-  max-height: 230px;
-  min-height: 230px;
-  max-width: 180px;
-  min-width: 180px;
+  max-height: 300px;
+  min-height: 300px;
+  max-width: 250px;
+  min-width: 250px;
   margin: .5em;
   padding: 0em 0em .5em 0em;
   text-align: center;
   background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-family: 'Merriweather', serif; }
 
 .plant-card button {
-  height: 20px; }
+  width: 95%; }
 
 .plant-card .btnTxt {
   font-size: .5rem;
@@ -80,14 +83,15 @@ body {
 .plant-pic {
   object-fit: cover;
   min-width: 100%;
-  max-height: 80px;
+  max-height: 130px;
   margin: auto;
   padding: auto;
   display: block;
   clear: both; }
 
 .water-date {
-  width: 90%; }
+  width: 90%;
+  height: 20px; }
 
 .plant-name {
   margin-top: .3em;
@@ -108,30 +112,29 @@ body {
 
 .plant-card p {
   font-size: .60em;
-  margin-bottom: 0em;
-  font-family: 'Assistant', sans-serif; }
+  margin-bottom: 0em; }
 
 .icon-field {
-  display: block;
+  display: unset;
   margin: .25em; }
 
 .delete-btn {
-  width: 15px;
+  width: 20px;
   float: right;
   background-color: transparent; }
 
 .water-icon {
-  width: 15px;
+  width: 20px;
   float: right;
   background-color: transparent; }
 
 .shovel-icon {
-  width: 15px;
+  width: 20px;
   float: right;
   background-color: transparent; }
 
 .actionReq {
-  width: 15px;
+  width: 20px;
   float: right;
   background-color: transparent; }
 

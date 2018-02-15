@@ -4,7 +4,7 @@
 <input type="radio" name="all" value="" ng-model="status"> All Plants
 
 <div id="plantContainer" class="row">
-  <div class="plant-card col-2" ng-repeat="plant in plantArr | filter: {status: status}">
+  <div class="plant-card col-4" ng-repeat="plant in plantArr | filter: {status: status}">
 
 
     <img class="plant-pic" src="{{plant.img}}">
@@ -15,23 +15,23 @@
       <img class="actionReq" ng-show="plant.needsWatering || plant.sowSeason" src="../img/alert.png">
     </div>
     <div>
-      <h6 class="plant-name">{{plant.name}}</h6>
+      <h5 class="plant-name">{{plant.name}}</h5>
       <p ng-click="showNotePopUp(plant)">Notes</p>
     </div>  
     <!-- displays if plant is active -->
     <div ng-show="plant.status === 'active-plant'">
-      <p>Last water date: {{plant.water_date}}</p>
-      <p>Log new water date:</p>
+      <!-- <p>Last water date: {{plant.water_date}}</p> -->
+      <p>Last Water Date:</p>
         <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateUserPlant('lastWaterDate', newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
     </div>
 
     <!-- shows if plant is not yet planted -->
-    <button id="searchBtn" type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="changePlantStatus(plant.fbID, 'active-plant')"><p class="btnTxt">Plant</p></button>
+    <button id="searchBtn" type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="changePlantStatus(plant.fbID, 'active-plant')">Plant</button>
     <!-- shows if plant has been planted -->
-    <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'active-plant'" ng-click="changePlantStatus(plant.fbID, 'archived-plant')"><p class="btnTxt">Archive</p></button>
+    <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'active-plant'" ng-click="changePlantStatus(plant.fbID, 'archived-plant')">Archive</button>
 
     <!-- shows for all cards, produces pop up window when clicked -->
-    <p class="get-more-info" ng-click="showPopover(plant)">Get More Info</p>
+    <p class="get-more-info" ng-click="showPopover(plant)">More Info</p>
 
     
   </div>

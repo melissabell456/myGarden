@@ -46,6 +46,7 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
   
   $scope.hidePopover = () => {
     $scope.popoverIsVisible = false;
+    $scope.resultDisplay = false;
   };
   
 });
