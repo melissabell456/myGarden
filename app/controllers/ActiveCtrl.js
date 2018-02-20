@@ -134,7 +134,9 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     }
     UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
     .then( () => {
-      $state.reload('home');      
+      $state.reload();
+      $scope.status = status;
+      console.log("should reload and filter for active or for archived only");
     });
   };
 
@@ -143,7 +145,9 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     let patch = {[prop]: newData};
     UserPlantFctry.editUserPlant(firebaseID, patch)
     .then( () => {
-      $state.reload();
+      console.log("should reload and filter for active only");
+      $scope.status = "active-plant";
+      // $state.reload();
     });
   };
 
@@ -152,6 +156,8 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     UserPlantFctry.removeUserPlant(plant)
     .then( () => {
       $state.reload();
+      console.log("should reload and filter for active only");
+      $scope.status = "active-plant";
     });
   };
 
