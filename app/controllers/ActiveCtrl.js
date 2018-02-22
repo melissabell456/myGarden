@@ -108,26 +108,6 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     });
   };
 
-  const needsPlanting = (plantID) => {
-    return $q( (resolve, reject) => {
-      PlantStatsFctry.searchByID(plantID)
-      .then ( (plantStats) => {
-        let plantDate = plantStats[Object.keys(plantStats)[0]].plant_date;
-        let plantMonth = +((plantDate).slice(0,2));
-        let plantDay = +((plantDate).slice(3,5));
-        let plantMoment = moment([+year, +plantMonth, +plantDay]);
-        let daysUntilPlant = plantMoment.diff(today, 'days');
-          if (daysUntilPlant <= 0) {
-            resolve(true);
-          }
-          else {
-            resolve(false);
-          }
-        });
-    });
-  };
-
-
 // REACTIONS TO USER INTERACTION
 
   // when user "plants" an unplanted plant or archives an existing plant, the status gets updated in firebase and additional properties are added to plant objects

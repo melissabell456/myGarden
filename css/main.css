@@ -23,6 +23,10 @@ body {
   background-color: #329932;
   height: 50px; }
 
+#navi {
+  display: inline-block;
+  width: 100%; }
+
 #header {
   float: left; }
 
@@ -39,6 +43,16 @@ body {
   z-index: -1;
   margin-left: 9em;
   margin-top: .5em; }
+
+.toggle ul {
+  margin-bottom: 0px; }
+
+.toggle ul li {
+  background-color: #f6f0e8; }
+
+.toggle ul li a {
+  color: #329932;
+  background-color: #f6f0e8; }
 
 #search {
   float: right; }

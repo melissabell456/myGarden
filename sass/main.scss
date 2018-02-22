@@ -35,6 +35,8 @@ body {
 
 // all header elements
 #navi {
+  display: inline-block;
+  width: 100%;
 }
 
 // holds text and image logo
@@ -62,6 +64,25 @@ body {
   margin-left: 9em;
   margin-top: .5em;
 }
+
+// clickable nav element
+.toggle {
+
+}
+
+.toggle ul {
+  margin-bottom: 0px;
+}
+
+.toggle ul li {
+  background-color: #f6f0e8;
+}
+
+.toggle ul li a {
+  color: #329932;
+  background-color: #f6f0e8;
+}
+
 // holds all search elements
 #search {
   float: right;
