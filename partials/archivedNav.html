@@ -1,0 +1,24 @@
+<div id="gridContainer">  
+    
+      <div id="navi">
+        <img id="logoImg" src="../img/carrot.png">
+        <div id="header">
+          <h1 id="logoName">myGarden</h1>
+        </div>
+        <div id="search" class="search-grid" ui-view="search-plants"></div>
+      </div>
+    
+      <nav aria-label="...">
+          <ul class="pagination pagination-sm">
+            <li class="page-item"><a class="page-link" href="#!/myGarden">Active Garden</a></li>
+            <li class="page-item"><a class="page-link" href="#!/to-plant">To Plant</a></li>
+            <li class="page-item disabled">
+              <a class="page-link" href="#!/archivedGarden" tabindex="-1">Archived Plants</a>
+            </li>
+          </ul>
+      </nav>
+
+      <div id="archivedView" class="plant-view" ui-view="archived-plantView"></div>
+    
+    
+    </div>

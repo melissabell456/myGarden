@@ -1,9 +1,9 @@
 "use strict";
 
-angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope, UserPlantFctry, HarvestHelperFctry, PlantStatsFctry, $q) {
-
+angular.module("myGardenApp").controller("ArchivedCtrl", function ($state, $scope, UserPlantFctry, HarvestHelperFctry, PlantStatsFctry, $q) {
+  
   let currentUser = firebase.auth().currentUser.uid;
-  let status = "to-plant";
+  let status = "archived-plant";
   $scope.plantArr = [];
   let day = moment().format('DD');
   let month = moment().format('MM');
@@ -12,7 +12,7 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
 
   UserPlantFctry.getUserPlants(currentUser, status)
   .then( (userPlants) => {
-    console.log("to-grow", userPlants);
+    console.log("archived", userPlants);
     for (let plant in userPlants) {
       // build plantStats object with user specific properties recieved from firebase
       let plantStats = {};
@@ -121,7 +121,5 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
     $scope.notePopoverIsVisible = true;
     $scope.popoverPlant = plant;
   };
-
-    
-
+  
 });

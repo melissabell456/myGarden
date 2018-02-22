@@ -3,7 +3,7 @@
 angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestHelperFctry, UserPlantFctry, PlantStatsFctry, WeatherFctry, $state, $q) {
 
   let currentUser = firebase.auth().currentUser.uid;
-  // let status = "active-plant";
+  let status = "active-plant";
   $scope.plantArr = [];
   // scoping today's date for use as max-date in date selector
   $scope.todayDate = moment().format('MM/DD/YYYY');
@@ -48,7 +48,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 // BUILDING USER PLANT OBJECTS FOR USE IN PARTIAL
 
   // gets current user's plants
-  UserPlantFctry.getAllUserPlants(currentUser)
+  UserPlantFctry.getUserPlants(currentUser, status)
   .then( (userPlants) => {
     getDaysSinceRained()
     .then( (int) => {
@@ -61,46 +61,25 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
         plantStats.fbID = plant;
         plantStats.notes = userPlants[plant].notes;
         plantStats.userPlant_date = userPlants[plant].planted_date;
-        if (plantStats.status === "active-plant") {
-          plantStats.water_date = userPlants[plant].lastWaterDate;
-          // sending active plant to determine whether the plant has surpassed recommended watering parameters 
-          needsWater(userPlants[plant], daysSinceRained)
-          .then( (bool) => {
-            // after water recommendations are determined, adding needsWatering boolean as property on plantStats obj 
-            plantStats.needsWatering = bool;
-            return HarvestHelperFctry.searchByID(userPlants[plant].id);
-          })
-          .then ( (apiData) => {
-            // adding properties on plantStats obj from API data
-            plantStats.name = apiData.name;
-            plantStats.water_req = apiData.watering;
-            plantStats.img = apiData.image;
-            plantStats.pests = apiData.pests;
-            plantStats.diseases = apiData.diseases;
-            plantStats.harvesting = apiData.harvesting;
-            // pushes final object to array for use in partial
-            $scope.plantArr.push(plantStats);
-          });
-        }
-        else {
-          // if plant is not active status, the plant is checked to see if it has surpassed recommended planting date
-          needsPlanting(userPlants[plant].id)
-          .then( (bool) => {
-            // after planting recommendation is determined, adds property to plantStats obj
-            plantStats.sowSeason = bool;
-            return HarvestHelperFctry.searchByID(userPlants[plant].id);
-          })
-          .then ( (apiData) => {
-            // continues to build up object with APIdata
-            plantStats.name = apiData.name;
-            plantStats.sun_req = apiData.optimal_sun;
-            plantStats.plant_date = apiData.when_to_plant;
-            plantStats.growing_from_seed = apiData.growing_from_seed;
-            plantStats.img = apiData.image;
-            // pushes final object to array for use in partial
-            $scope.plantArr.push(plantStats);
-          });
-        }
+        plantStats.water_date = userPlants[plant].lastWaterDate;
+        // sending active plant to determine whether the plant has surpassed recommended watering parameters 
+        needsWater(userPlants[plant], daysSinceRained)
+        .then( (bool) => {
+          // after water recommendations are determined, adding needsWatering boolean as property on plantStats obj 
+          plantStats.needsWatering = bool;
+          return HarvestHelperFctry.searchByID(userPlants[plant].id);
+        })
+        .then ( (apiData) => {
+          // adding properties on plantStats obj from API data
+          plantStats.name = apiData.name;
+          plantStats.water_req = apiData.watering;
+          plantStats.img = apiData.image;
+          plantStats.pests = apiData.pests;
+          plantStats.diseases = apiData.diseases;
+          plantStats.harvesting = apiData.harvesting;
+          // pushes final object to array for use in partial
+          $scope.plantArr.push(plantStats);
+        });
       }
     });
   });
