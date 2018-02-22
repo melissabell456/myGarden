@@ -1,4 +1,4 @@
-<input type="radio" name="active-plant" value="active-plant" ng-model="status"> Active
+<input type="radio" name="active-plant" value="active-plant" ng-model="status" checked> Active Garden
 <input type="radio" name="to-plant" value="to-plant" ng-model="status"> To-Plant
 <input type="radio" name="archived" value="archived-plant" ng-model="status"> Archived Plants
 <input type="radio" name="all" value="" ng-model="status"> All Plants
@@ -41,7 +41,10 @@
     <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'archived-plant'" ng-click="changePlantStatus(plant.fbID, 'to-plant')">Plant Again</button>
 
     <!-- shows for all cards, produces pop up window when clicked -->
-    <p class="get-more-info" ng-click="showPopover(plant)">More Info</p>
+    <div class="get-more-info" ng-click="showPopover(plant)">
+      <p>Get More Info</p>
+    </div>
+    <!-- <button type="button" class="btn btn-success btn-sm get-more-info" ng-click="showPopover(plant)">Get More Info</button> -->
 
     
   </div>
@@ -50,6 +53,7 @@
 
 <!-- pop up for more plant info -->
 <div class="popover" ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
+  <div class="pop-plant-card">
     <img class="plant-pic" src="{{popoverPlant.img}}">
     <h6 class="plant-name">{{popoverPlant.name}}</h6> 
     <div ng-show="popoverPlant.status ==='active-plant'"> 
@@ -63,8 +67,9 @@
       <p>Planting Location: {{popoverPlant.sun_req}}</p>
       <p>Growing From Seed: {{popoverPlant.growing_from_seed}}</p>
     </div>
-    <p>My Notes: {{popoverPlant.notes}}</p>  
+    <p>My Notes: {{popoverPlant.notes}}</p>
   </div>
+</div>
 
 <!-- pop up for user notes -->
   <div class="popover" ng-show="notePopoverIsVisible" ng-mouseleave="hidePopover()">
