@@ -36,6 +36,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
             // console.log(daysSinceRained, "how many days");
             return daysSinceDay;
           });
+          console.log(incrementalDays);
           let daysSinceRained = incrementalDays.sort()[0];
           resolve(daysSinceRained);
         });
@@ -52,7 +53,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     getDaysSinceRained()
     .then( (int) => {
       let daysSinceRained = int;
-      console.log(daysSinceRained);
+      console.log("how many days since it has rained", daysSinceRained);
       for (let plant in userPlants) {
         // build plantStats object with user specific properties recieved from firebase
         let plantStats = {};
@@ -118,7 +119,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
       .then ( (plantStats) => {
           let reqWater = plantStats[Object.keys(plantStats)[0]].water_interval;
           // if the user has not watered their plant for longer than the suggested frequency, this is resolved as true, else false
-          if (daysSinceWatered > reqWater || daysSinceRained > reqWater) {
+          if (daysSinceWatered > reqWater && daysSinceRained > reqWater) {
             resolve(true);
           }
           else {
