@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestHelperFctry, UserPlantFctry, PlantStatsFctry, $state, $q) {
+angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestHelperFctry, UserPlantFctry, PlantStatsFctry, WeatherFctry, $state, $q) {
 
   let currentUser = firebase.auth().currentUser.uid;
   // let status = "active-plant";
@@ -12,65 +12,103 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   let year = moment().format('YYYY');
   let today = moment([+year, +month, +day]);
 
-  
+
+// DETERMINE AMOUNT OF DAYS SINCE RAIN
+
+  const getDaysSinceRained = () => {
+    return $q( (resolve, reject) => {
+      let weeklyWeatherPromises =[];
+      let todayMoment = moment();
+      // this will loop through the last 7 days to send request to weather API for rain for each day
+        for (let i = 0; i < 7; i++) {
+          let observeDate = moment(todayMoment).subtract(i, 'day').format('YYYYMMDD'); 
+          weeklyWeatherPromises.push(WeatherFctry.getHistoricalRain(observeDate));
+        }
+        Promise.all(weeklyWeatherPromises)
+        .then((weeklyRain) => {
+          // console.log(weeklyRain);
+          let daysWithRain = weeklyRain.filter( day => day !== "noRain" );
+          let incrementalDays = daysWithRain.map( (day) => {
+            let rainMonth = +(day.slice(4,6));
+            let rainDay = +(day.slice(6,8));
+            let rainMoment = moment([+year, +rainMonth, +rainDay]);
+            let daysSinceDay = today.diff(rainMoment, 'days');
+            // console.log(daysSinceRained, "how many days");
+            return daysSinceDay;
+          });
+          console.log(incrementalDays);
+          let daysSinceRained = incrementalDays.sort()[0];
+          resolve(daysSinceRained);
+        });
+    });
+  };
+
+
+
 // BUILDING USER PLANT OBJECTS FOR USE IN PARTIAL
 
   // gets current user's plants
   UserPlantFctry.getAllUserPlants(currentUser)
   .then( (userPlants) => {
-    for (let plant in userPlants) {
-      // build plantStats object with user specific properties recieved from firebase
-      let plantStats = {};
-      plantStats.status = userPlants[plant].status_id;
-      plantStats.fbID = plant;
-      plantStats.notes = userPlants[plant].notes;
-      plantStats.userPlant_date = userPlants[plant].planted_date;
-      if (plantStats.status === "active-plant") {
-        plantStats.water_date = userPlants[plant].lastWaterDate;
-        // sending active plant to determine whether the plant has surpassed recommended watering parameters 
-        needsWater(userPlants[plant])
-        .then( (bool) => {
-          // after water recommendations are determined, adding needsWatering boolean as property on plantStats obj 
-          plantStats.needsWatering = bool;
-          return HarvestHelperFctry.searchByID(userPlants[plant].id);
-        })
-        .then ( (apiData) => {
-          // adding properties on plantStats obj from API data
-          plantStats.name = apiData.name;
-          plantStats.water_req = apiData.watering;
-          plantStats.img = apiData.image;
-          plantStats.pests = apiData.pests;
-          plantStats.diseases = apiData.diseases;
-          plantStats.harvesting = apiData.harvesting;
-          // pushes final object to array for use in partial
-          $scope.plantArr.push(plantStats);
-        });
+    getDaysSinceRained()
+    .then( (int) => {
+      let daysSinceRained = int;
+      console.log("how many days since it has rained", daysSinceRained);
+      for (let plant in userPlants) {
+        // build plantStats object with user specific properties recieved from firebase
+        let plantStats = {};
+        plantStats.status = userPlants[plant].status_id;
+        plantStats.fbID = plant;
+        plantStats.notes = userPlants[plant].notes;
+        plantStats.userPlant_date = userPlants[plant].planted_date;
+        if (plantStats.status === "active-plant") {
+          plantStats.water_date = userPlants[plant].lastWaterDate;
+          // sending active plant to determine whether the plant has surpassed recommended watering parameters 
+          needsWater(userPlants[plant], daysSinceRained)
+          .then( (bool) => {
+            // after water recommendations are determined, adding needsWatering boolean as property on plantStats obj 
+            plantStats.needsWatering = bool;
+            return HarvestHelperFctry.searchByID(userPlants[plant].id);
+          })
+          .then ( (apiData) => {
+            // adding properties on plantStats obj from API data
+            plantStats.name = apiData.name;
+            plantStats.water_req = apiData.watering;
+            plantStats.img = apiData.image;
+            plantStats.pests = apiData.pests;
+            plantStats.diseases = apiData.diseases;
+            plantStats.harvesting = apiData.harvesting;
+            // pushes final object to array for use in partial
+            $scope.plantArr.push(plantStats);
+          });
+        }
+        else {
+          // if plant is not active status, the plant is checked to see if it has surpassed recommended planting date
+          needsPlanting(userPlants[plant].id)
+          .then( (bool) => {
+            // after planting recommendation is determined, adds property to plantStats obj
+            plantStats.sowSeason = bool;
+            return HarvestHelperFctry.searchByID(userPlants[plant].id);
+          })
+          .then ( (apiData) => {
+            // continues to build up object with APIdata
+            plantStats.name = apiData.name;
+            plantStats.sun_req = apiData.optimal_sun;
+            plantStats.plant_date = apiData.when_to_plant;
+            plantStats.growing_from_seed = apiData.growing_from_seed;
+            plantStats.img = apiData.image;
+            // pushes final object to array for use in partial
+            $scope.plantArr.push(plantStats);
+          });
+        }
       }
-      else {
-        // if plant is not active status, the plant is checked to see if it has surpassed recommended planting date
-        needsPlanting(userPlants[plant].id)
-        .then( (bool) => {
-          // after planting recommendation is determined, adds property to plantStats obj
-          plantStats.sowSeason = bool;
-          return HarvestHelperFctry.searchByID(userPlants[plant].id);
-        })
-        .then ( (apiData) => {
-          // continues to build up object with APIdata
-          plantStats.name = apiData.name;
-          plantStats.sun_req = apiData.optimal_sun;
-          plantStats.plant_date = apiData.when_to_plant;
-          plantStats.growing_from_seed = apiData.growing_from_seed;
-          plantStats.img = apiData.image;
-          // pushes final object to array for use in partial
-          $scope.plantArr.push(plantStats);
-        });
-      }
-    }
+    });
   });
+
 
 // DETERMINE PLANT NEEDS
 
-  const needsWater = (plant) => {
+  const needsWater = (plant, daysSinceRained) => {
     let waterMonth = +((plant.lastWaterDate).slice(0,2));
     let waterDay = +((plant.lastWaterDate).slice(3,5));
     let waterMoment = moment([+year, +waterMonth, +waterDay]);
@@ -81,7 +119,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
       .then ( (plantStats) => {
           let reqWater = plantStats[Object.keys(plantStats)[0]].water_interval;
           // if the user has not watered their plant for longer than the suggested frequency, this is resolved as true, else false
-          if (daysSinceWatered > reqWater) {
+          if (daysSinceWatered > reqWater && daysSinceRained > reqWater) {
             resolve(true);
           }
           else {
