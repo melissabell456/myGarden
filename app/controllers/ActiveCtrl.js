@@ -25,18 +25,19 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
           weeklyWeatherPromises.push(WeatherFctry.getHistoricalRain(observeDate));
         }
         Promise.all(weeklyWeatherPromises)
+        // the last 7 days of rain will be evaluated and the amount of rain is returned in inches per day
         .then((weeklyRain) => {
-          // console.log(weeklyRain);
+          // removes days with 0 inches of rain
           let daysWithRain = weeklyRain.filter( day => day !== "noRain" );
+          // formats each day for use with moment and compares to today to get amount of days since rained
           let incrementalDays = daysWithRain.map( (day) => {
             let rainMonth = +(day.slice(4,6));
             let rainDay = +(day.slice(6,8));
             let rainMoment = moment([+year, +rainMonth, +rainDay]);
-            let daysSinceDay = today.diff(rainMoment, 'days');
-            // console.log(daysSinceRained, "how many days");
-            return daysSinceDay;
+            let daysSince = today.diff(rainMoment, 'days');
+            return daysSince;
           });
-          console.log(incrementalDays);
+          // sorts days since rained to get the most recent rain day in comparison to today
           let daysSinceRained = incrementalDays.sort()[0];
           resolve(daysSinceRained);
         });
@@ -51,9 +52,8 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   UserPlantFctry.getUserPlants(currentUser, status)
   .then( (userPlants) => {
     getDaysSinceRained()
-    .then( (int) => {
-      let daysSinceRained = int;
-      console.log("how many days since it has rained", daysSinceRained);
+    .then( (dayAmt) => {
+      let daysSinceRained = dayAmt;
       for (let plant in userPlants) {
         // build plantStats object with user specific properties recieved from firebase
         let plantStats = {};
@@ -113,27 +113,15 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
   // when user "plants" an unplanted plant or archives an existing plant, the status gets updated in firebase and additional properties are added to plant objects
 
   $scope.changePlantStatus = (firebaseID, status) => {
-    let statusUpdate={};
-    if (status === "active-plant") {
-      statusUpdate = {
-        planted_date: $scope.todayDate,
-        status_id: "active-plant",
-        status: `${currentUser}_${status}`,
-        lastWaterDate: moment().format('MM/DD/YYYY')
-      };
-    }
-    else {
-      statusUpdate = {
-        archive_date: $scope.todayDate,
-        status_id: status,
+    let statusUpdate={
+        wat: 'activectrl',
+        archived_date: $scope.todayDate,
+        status_id: "archived-plant",
         status: `${currentUser}_${status}`
       };
-    }
     UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
     .then( () => {
-      $state.reload();
-      $scope.status = status;
-      console.log("should reload and filter for active or for archived only");
+      $state.go('archived-plants');
     });
   };
 

@@ -61,27 +61,16 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
   // USER INTERACTIONS
   
   $scope.changePlantStatus = (firebaseID, status) => {
-    let statusUpdate={};
-    if (status === "active-plant") {
-      statusUpdate = {
-        planted_date: $scope.todayDate,
+    let statusUpdate = {
+        wat: 'toplantctrl',
+        planted_date: moment().format('MM/DD/YYYY'),
         status_id: "active-plant",
         status: `${currentUser}_${status}`,
         lastWaterDate: moment().format('MM/DD/YYYY')
       };
-    }
-    else {
-      statusUpdate = {
-        archive_date: $scope.todayDate,
-        status_id: status,
-        status: `${currentUser}_${status}`
-      };
-    }
     UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
     .then( () => {
-      $state.reload();
-      $scope.status = status;
-      console.log("should reload and filter for active or for archived only");
+      $state.go('home');
     });
   };
 
