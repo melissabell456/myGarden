@@ -1,9 +1,9 @@
 "use strict";
 
-angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope, UserPlantFctry, HarvestHelperFctry, PlantStatsFctry, $q) {
-
+angular.module("myGardenApp").controller("ArchivedCtrl", function ($state, $scope, UserPlantFctry, HarvestHelperFctry, PlantStatsFctry, $q) {
+  
   let currentUser = firebase.auth().currentUser.uid;
-  let status = "to-plant";
+  let status = "archived-plant";
   $scope.plantArr = [];
   let day = moment().format('DD');
   let month = moment().format('MM');
@@ -12,7 +12,7 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
 
   UserPlantFctry.getUserPlants(currentUser, status)
   .then( (userPlants) => {
-    console.log("to-grow", userPlants);
+    console.log("archived", userPlants);
     for (let plant in userPlants) {
       // build plantStats object with user specific properties recieved from firebase
       let plantStats = {};
@@ -61,16 +61,27 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
   // USER INTERACTIONS
   
   $scope.changePlantStatus = (firebaseID, status) => {
-    let statusUpdate = {
-        wat: 'toplantctrl',
-        planted_date: moment().format('MM/DD/YYYY'),
+    let statusUpdate={};
+    if (status === "active-plant") {
+      statusUpdate = {
+        wat: 'archivedctrl',
+        planted_date: $scope.todayDate,
         status_id: "active-plant",
         status: `${currentUser}_${status}`,
         lastWaterDate: moment().format('MM/DD/YYYY')
       };
+    }
+    else {
+      statusUpdate = {
+        wat: 'archivedctrl',
+        archive_date: $scope.todayDate,
+        status_id: status,
+        status: `${currentUser}_${status}`
+      };
+    }
     UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
     .then( () => {
-      $state.go('home');
+      $state.go('to-plant');
     });
   };
 
@@ -110,7 +121,5 @@ angular.module("myGardenApp").controller("ToPlantCtrl", function($state, $scope,
     $scope.notePopoverIsVisible = true;
     $scope.popoverPlant = plant;
   };
-
-    
-
+  
 });

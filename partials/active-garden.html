@@ -1,18 +1,12 @@
-<input type="radio" name="active-plant" value="active-plant" ng-model="status" checked> Active Garden
-<input type="radio" name="to-plant" value="to-plant" ng-model="status"> To-Plant
-<input type="radio" name="archived" value="archived-plant" ng-model="status"> Archived Plants
-<input type="radio" name="all" value="" ng-model="status"> All Plants
-
 <div id="plantContainer" class="row">
-  <div class="plant-card col-4" ng-repeat="plant in plantArr | filter: {status: status}">
+  <div class="plant-card col-4" ng-repeat="plant in plantArr">
 
 
     <img class="plant-pic" src="{{plant.img}}">
     <div class="icon-field">
       <img class="delete-btn" ng-click="removePlant(plant.fbID)" src="../img/delete-btn.png">
       <img class="water-icon" ng-show="plant.needsWatering" src="../img/water-drop.png">
-      <img class="shovel-icon" ng-show="plant.sowSeason" src="../img/shovel.png">
-      <img class="actionReq" ng-show="plant.needsWatering || plant.sowSeason" src="../img/alert.png">
+      <img class="actionReq" ng-show="plant.needsWatering" src="../img/alert.png">
     </div>
     <div>
       <h5 class="plant-name">{{plant.name}}</h5>
@@ -21,31 +15,17 @@
 
 <!-- PLANT STATS TO SHOW ON LOAD -->
 
-  <!-- displays if plant is active -->
-    <div ng-show="plant.status === 'active-plant'">
+    <div>
       <p>Last Water Date:</p>
         <input class="water-date" placeholder="{{plant.water_date}}" moment-picker="ctrl.dateFormatted" change="updateUserPlant('lastWaterDate', newValue._i, plant.fbID)" format="MM/DD/YYYY" today="true" autoclose="true" start-view="month" max-date="todayDate">
     </div>
   
-  <!-- displays if plant is archived -->
-    <div ng-show="plant.status === 'archived-plant'">
-      <p>Last Plant Date: {{plant.userPlant_date}}</p>
-    </div>
-
-<!-- BTNS -->
-    <!-- shows if plant is not yet planted -->
-    <button type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="changePlantStatus(plant.fbID, 'active-plant')">Plant</button>
-    <!-- shows if plant has been planted -->
     <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'active-plant'" ng-click="changePlantStatus(plant.fbID, 'archived-plant')">Archive</button>
-    <!-- shows if plant has been archived -->
-    <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'archived-plant'" ng-click="changePlantStatus(plant.fbID, 'to-plant')">Plant Again</button>
-
     <!-- shows for all cards, produces pop up window when clicked -->
+
     <div class="get-more-info" ng-click="showPopover(plant)">
       <p>Get More Info</p>
     </div>
-    <!-- <button type="button" class="btn btn-success btn-sm get-more-info" ng-click="showPopover(plant)">Get More Info</button> -->
-
     
   </div>
 </div>
@@ -56,16 +36,11 @@
   <div class="pop-plant-card">
     <img class="plant-pic" src="{{popoverPlant.img}}">
     <h6 class="plant-name">{{popoverPlant.name}}</h6> 
-    <div ng-show="popoverPlant.status ==='active-plant'"> 
+    <div> 
       <p>Potential Pests: {{popoverPlant.pests}}</p>
       <p>Potential Diseases: {{popoverPlant.diseases}}</p>
       <p>Harvesting Considerations: {{popoverPlant.harvesting}}</p>
       <p>Watering Considerations: {{popoverPlant.water_req}}</p>  
-    </div>
-    <div ng-show="popoverPlant.status ==='to-plant' || 'archived-plant'"> 
-      <p>Plant Date Considerations: {{popoverPlant.plant_date}}</p>
-      <p>Planting Location: {{popoverPlant.sun_req}}</p>
-      <p>Growing From Seed: {{popoverPlant.growing_from_seed}}</p>
     </div>
     <p>My Notes: {{popoverPlant.notes}}</p>
   </div>

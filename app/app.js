@@ -30,20 +30,43 @@ angular.module("myGardenApp", ['ui.router', 'moment-picker'])
           templateUrl: '/partials/active-garden.html',
           controller: 'ActiveCtrl'
         },
-        // 'to-plant@home': { 
-        //   templateUrl: '/partials/to-plant.html',
-        //   controller: 'ToPlantCtrl'
-        // },
         'search-plants@home': { 
           templateUrl: '/partials/search-plants.html',
           controller: 'PlantSearchCtrl'
         }
-        // 'plant-alerts@home': { 
-        //   templateUrl: '/partials/plant-alerts.html',
-        //   controller: 'PlantAlertCtrl'
-        // }
+      }
+    })
+    .state('to-plant', {
+      url: '/to-plant',
+      resolve: { isAuth },
+      views: {
+        '': { templateUrl: '/partials/to-plantNav.html' },
+        'search-plants@to-plant': { 
+          templateUrl: '/partials/search-plants.html',
+          controller: 'PlantSearchCtrl'
+        },
+        'to-plantView@to-plant': { 
+          templateUrl: '/partials/to-plant.html',
+          controller: 'ToPlantCtrl'
+        }
+      }
+    })
+    .state('archived-plants', {
+      url: '/archivedGarden',
+      resolve: { isAuth },
+      views: {
+        '': { templateUrl: '/partials/archivedNav.html' },
+        'search-plants@archived-plants': { 
+          templateUrl: '/partials/search-plants.html',
+          controller: 'PlantSearchCtrl'
+        },
+        'archived-plantView@archived-plants': { 
+          templateUrl: '/partials/archived-garden.html',
+          controller: 'ArchivedCtrl'
+        }
       }
     });
+// closing main config
   })
   .run(fbCreds => {
     let creds = fbCreds;
@@ -53,4 +76,3 @@ angular.module("myGardenApp", ['ui.router', 'moment-picker'])
     };
     firebase.initializeApp(authConfig);
   });
-  

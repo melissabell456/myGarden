@@ -3,7 +3,7 @@
 angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestHelperFctry, UserPlantFctry, PlantStatsFctry, WeatherFctry, $state, $q) {
 
   let currentUser = firebase.auth().currentUser.uid;
-  // let status = "active-plant";
+  let status = "active-plant";
   $scope.plantArr = [];
   // scoping today's date for use as max-date in date selector
   $scope.todayDate = moment().format('MM/DD/YYYY');
@@ -25,18 +25,19 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
           weeklyWeatherPromises.push(WeatherFctry.getHistoricalRain(observeDate));
         }
         Promise.all(weeklyWeatherPromises)
+        // the last 7 days of rain will be evaluated and the amount of rain is returned in inches per day
         .then((weeklyRain) => {
-          // console.log(weeklyRain);
+          // removes days with 0 inches of rain
           let daysWithRain = weeklyRain.filter( day => day !== "noRain" );
+          // formats each day for use with moment and compares to today to get amount of days since rained
           let incrementalDays = daysWithRain.map( (day) => {
             let rainMonth = +(day.slice(4,6));
             let rainDay = +(day.slice(6,8));
             let rainMoment = moment([+year, +rainMonth, +rainDay]);
-            let daysSinceDay = today.diff(rainMoment, 'days');
-            // console.log(daysSinceRained, "how many days");
-            return daysSinceDay;
+            let daysSince = today.diff(rainMoment, 'days');
+            return daysSince;
           });
-          console.log(incrementalDays);
+          // sorts days since rained to get the most recent rain day in comparison to today
           let daysSinceRained = incrementalDays.sort()[0];
           resolve(daysSinceRained);
         });
@@ -48,12 +49,11 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 // BUILDING USER PLANT OBJECTS FOR USE IN PARTIAL
 
   // gets current user's plants
-  UserPlantFctry.getAllUserPlants(currentUser)
+  UserPlantFctry.getUserPlants(currentUser, status)
   .then( (userPlants) => {
     getDaysSinceRained()
-    .then( (int) => {
-      let daysSinceRained = int;
-      console.log("how many days since it has rained", daysSinceRained);
+    .then( (dayAmt) => {
+      let daysSinceRained = dayAmt;
       for (let plant in userPlants) {
         // build plantStats object with user specific properties recieved from firebase
         let plantStats = {};
@@ -61,46 +61,25 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
         plantStats.fbID = plant;
         plantStats.notes = userPlants[plant].notes;
         plantStats.userPlant_date = userPlants[plant].planted_date;
-        if (plantStats.status === "active-plant") {
-          plantStats.water_date = userPlants[plant].lastWaterDate;
-          // sending active plant to determine whether the plant has surpassed recommended watering parameters 
-          needsWater(userPlants[plant], daysSinceRained)
-          .then( (bool) => {
-            // after water recommendations are determined, adding needsWatering boolean as property on plantStats obj 
-            plantStats.needsWatering = bool;
-            return HarvestHelperFctry.searchByID(userPlants[plant].id);
-          })
-          .then ( (apiData) => {
-            // adding properties on plantStats obj from API data
-            plantStats.name = apiData.name;
-            plantStats.water_req = apiData.watering;
-            plantStats.img = apiData.image;
-            plantStats.pests = apiData.pests;
-            plantStats.diseases = apiData.diseases;
-            plantStats.harvesting = apiData.harvesting;
-            // pushes final object to array for use in partial
-            $scope.plantArr.push(plantStats);
-          });
-        }
-        else {
-          // if plant is not active status, the plant is checked to see if it has surpassed recommended planting date
-          needsPlanting(userPlants[plant].id)
-          .then( (bool) => {
-            // after planting recommendation is determined, adds property to plantStats obj
-            plantStats.sowSeason = bool;
-            return HarvestHelperFctry.searchByID(userPlants[plant].id);
-          })
-          .then ( (apiData) => {
-            // continues to build up object with APIdata
-            plantStats.name = apiData.name;
-            plantStats.sun_req = apiData.optimal_sun;
-            plantStats.plant_date = apiData.when_to_plant;
-            plantStats.growing_from_seed = apiData.growing_from_seed;
-            plantStats.img = apiData.image;
-            // pushes final object to array for use in partial
-            $scope.plantArr.push(plantStats);
-          });
-        }
+        plantStats.water_date = userPlants[plant].lastWaterDate;
+        // sending active plant to determine whether the plant has surpassed recommended watering parameters 
+        needsWater(userPlants[plant], daysSinceRained)
+        .then( (bool) => {
+          // after water recommendations are determined, adding needsWatering boolean as property on plantStats obj 
+          plantStats.needsWatering = bool;
+          return HarvestHelperFctry.searchByID(userPlants[plant].id);
+        })
+        .then ( (apiData) => {
+          // adding properties on plantStats obj from API data
+          plantStats.name = apiData.name;
+          plantStats.water_req = apiData.watering;
+          plantStats.img = apiData.image;
+          plantStats.pests = apiData.pests;
+          plantStats.diseases = apiData.diseases;
+          plantStats.harvesting = apiData.harvesting;
+          // pushes final object to array for use in partial
+          $scope.plantArr.push(plantStats);
+        });
       }
     });
   });
@@ -129,52 +108,20 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     });
   };
 
-  const needsPlanting = (plantID) => {
-    return $q( (resolve, reject) => {
-      PlantStatsFctry.searchByID(plantID)
-      .then ( (plantStats) => {
-        let plantDate = plantStats[Object.keys(plantStats)[0]].plant_date;
-        let plantMonth = +((plantDate).slice(0,2));
-        let plantDay = +((plantDate).slice(3,5));
-        let plantMoment = moment([+year, +plantMonth, +plantDay]);
-        let daysUntilPlant = plantMoment.diff(today, 'days');
-          if (daysUntilPlant <= 0) {
-            resolve(true);
-          }
-          else {
-            resolve(false);
-          }
-        });
-    });
-  };
-
-
 // REACTIONS TO USER INTERACTION
 
   // when user "plants" an unplanted plant or archives an existing plant, the status gets updated in firebase and additional properties are added to plant objects
 
   $scope.changePlantStatus = (firebaseID, status) => {
-    let statusUpdate={};
-    if (status === "active-plant") {
-      statusUpdate = {
-        planted_date: $scope.todayDate,
-        status_id: "active-plant",
-        status: `${currentUser}_${status}`,
-        lastWaterDate: moment().format('MM/DD/YYYY')
-      };
-    }
-    else {
-      statusUpdate = {
-        archive_date: $scope.todayDate,
-        status_id: status,
+    let statusUpdate={
+        wat: 'activectrl',
+        archived_date: $scope.todayDate,
+        status_id: "archived-plant",
         status: `${currentUser}_${status}`
       };
-    }
     UserPlantFctry.editUserPlant(firebaseID, statusUpdate)
     .then( () => {
-      $state.reload();
-      $scope.status = status;
-      console.log("should reload and filter for active or for archived only");
+      $state.go('archived-plants');
     });
   };
 

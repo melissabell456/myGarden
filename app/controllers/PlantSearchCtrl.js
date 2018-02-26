@@ -35,7 +35,14 @@ angular.module("myGardenApp").controller("PlantSearchCtrl", function($state, $sc
     };
     UserPlantFctry.addToPlantList(plantToAdd)
     .then( () => {
-      $state.reload('home');
+      // $state.reload('to-plant');
+      console.log($state.current.name);
+      if ($state.current.name === "to-plant") {
+        $state.reload();
+      }
+      else {
+        $state.go('to-plant');
+      }
     });
   };
 
