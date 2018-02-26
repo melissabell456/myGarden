@@ -64,7 +64,6 @@ angular.module("myGardenApp").controller("ArchivedCtrl", function ($state, $scop
     let statusUpdate={};
     if (status === "active-plant") {
       statusUpdate = {
-        wat: 'archivedctrl',
         planted_date: $scope.todayDate,
         status_id: "active-plant",
         status: `${currentUser}_${status}`,
@@ -73,7 +72,6 @@ angular.module("myGardenApp").controller("ArchivedCtrl", function ($state, $scop
     }
     else {
       statusUpdate = {
-        wat: 'archivedctrl',
         archive_date: $scope.todayDate,
         status_id: status,
         status: `${currentUser}_${status}`
