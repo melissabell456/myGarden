@@ -26,13 +26,13 @@
   <div class="popover" ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
     <div class="pop-plant-card">
       <img class="plant-pic" src="{{popoverPlant.img}}">
-      <h6 class="plant-name">{{popoverPlant.name}}</h6> 
+      <h5 class="plant-name">{{popoverPlant.name}}</h6> 
       <div> 
-        <p>Plant Date Considerations: {{popoverPlant.plant_date}}</p>
-        <p>Planting Location: {{popoverPlant.sun_req}}</p>
-        <p>Growing From Seed: {{popoverPlant.growing_from_seed}}</p>
+        <p><span class="topic">Plant Date Considerations:</span><br>{{popoverPlant.plant_date}}</p>
+        <p><span class="topic">Planting Location:</span><br> {{popoverPlant.sun_req}}</p>
+        <p><span class="topic">Growing From Seed:</span><br> {{popoverPlant.growing_from_seed}}</p>
       </div>
-      <p>My Notes: {{popoverPlant.notes}}</p>
+      <p><span class="topic">My Notes:</span><br>{{popoverPlant.notes}}</p>
     </div>
   </div>
   

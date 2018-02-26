@@ -98,7 +98,9 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
       .then ( (plantStats) => {
           let reqWater = plantStats[Object.keys(plantStats)[0]].water_interval;
           // if the user has not watered their plant for longer than the suggested frequency, this is resolved as true, else false
-          if (daysSinceWatered > reqWater && daysSinceRained > reqWater) {
+          // if (daysSinceWatered > reqWater && daysSinceRained > reqWater) {
+          console.log(daysSinceRained, "days since rain");
+          if (daysSinceRained >= reqWater && daysSinceWatered >= reqWater) {
             resolve(true);
           }
           else {

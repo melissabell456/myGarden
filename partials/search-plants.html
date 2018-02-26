@@ -1,7 +1,10 @@
-<!-- <div id="searchField"> -->
-  <input id = "searchEntry" type="text" ng-model="searchTerm" placeholder="Search By Plant Name">
-  <button type="button" class="btn btn-outline-success" ng-click="searchDB()">Search</button>
-<!-- </div> -->
+
+      <div class="input-group mb-3">
+          <input type="text" ng-model="searchTerm" class="form-control" placeholder="Plant Name" aria-label="" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-success" type="button" ng-click="searchDB()">Search</button>
+          </div>
+      </div>
 
 <div class="popover" ng-show="resultDisplay" ng-mouseleave="hidePopover()">
   <div ng-repeat="plant in searchResult">
@@ -17,9 +20,9 @@
   <div ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
     <img class="plant-pic" src="{{popoverPlant.image}}">
     <h6 class="plant-name">{{popoverPlant.name}}</h6>  
-    <p>Suggested Planting Time: {{popoverPlant.when_to_plant}}</p>
-    <p>Optimal Planting Location: {{popoverPlant.optimal_sun}}</p>
-    <p>Other Considerations: {{popoverPlant.planting_considerations}}</p>
+    <p><span class="topic">Suggested Planting Time:</span><br> {{popoverPlant.when_to_plant}}</p>
+    <p><span class="topic">Optimal Planting Location:</span><br> {{popoverPlant.optimal_sun}}</p>
+    <p><span class="topic">Other Considerations: </span><br>{{popoverPlant.planting_considerations}}</p>
   </div>
 
 
