@@ -27,11 +27,9 @@ angular.module("myGardenApp").constant("API_Key", {
 
 ## Screenshots:
 
-When user has selected a plant for their "to-plant" list, the user is alerted when the plant is ready to be planted.
-![](img/screenshots/plant_alert.png)
+![](img/screenshots/plant_alert.PNG)
 
-User is alerted when active plants last manual water date and last rain date exceed suggested watering frequency of plant.
-![](img/screenshots/water_alert.png)
+![](img/screenshots/water_alert.PNG)
 
 
 ## Technologies Used:
