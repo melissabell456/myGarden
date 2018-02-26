@@ -1,25 +1,33 @@
-<!-- <div id="searchField"> -->
-  <input id = "searchEntry" type="text" ng-model="searchTerm" placeholder="Search By Plant Name">
-  <button type="button" class="btn btn-outline-success" ng-click="searchDB()">Search</button>
-<!-- </div> -->
 
+      <div class="input-group mb-3">
+          <input type="text" ng-model="searchTerm" class="form-control" placeholder="Plant Name" aria-label="" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-success" type="button" ng-click="searchDB()">Search</button>
+          </div>
+      </div>
+
+<!-- pop up for search results -->
 <div class="popover" ng-show="resultDisplay" ng-mouseleave="hidePopover()">
-  <div ng-repeat="plant in searchResult">
-    
+  
+  <div ng-repeat="plant in searchResult">  
     <div class="search-result">
-      <h6 class="search-result-name">{{plant.name}}</h6>  
-        <img class="add-btn" ng-click="addPlant(plant.id)" src="../img/add-btn.png">
-        <img class="query" ng-click="showPopover(plant)" src="../img/query.jpg">
+      <h5 class="search-result-name">{{plant.name}}</h5>  
+      <!-- <img class="add-btn" ng-click="addPlant(plant.id)" src="../img/add-btn2.png"> -->
+      <button type="button" class="btn btn-success btn-sm" ng-click="addPlant(plant.id)">Add Plant</button>
+      <div class="get-more-info">
+          <p ng-click="showPopover(plant)">Get More Info</p>
+        </div>
     </div>
+
 </div>
 
-  <!-- pop up -->
+  <!-- shows for plant when click for more detail -->
   <div ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
     <img class="plant-pic" src="{{popoverPlant.image}}">
     <h6 class="plant-name">{{popoverPlant.name}}</h6>  
-    <p>Suggested Planting Time: {{popoverPlant.when_to_plant}}</p>
-    <p>Optimal Planting Location: {{popoverPlant.optimal_sun}}</p>
-    <p>Other Considerations: {{popoverPlant.planting_considerations}}</p>
+    <p><span class="topic">Suggested Planting Time:</span><br> {{popoverPlant.when_to_plant}}</p>
+    <p><span class="topic">Optimal Planting Location:</span><br> {{popoverPlant.optimal_sun}}</p>
+    <p><span class="topic">Other Considerations: </span><br>{{popoverPlant.planting_considerations}}</p>
   </div>
 
 

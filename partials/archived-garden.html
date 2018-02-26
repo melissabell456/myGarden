@@ -1,38 +1,24 @@
-<!-- <input type="radio" name="active-plant" value="active-plant" ng-model="status" checked> Active Garden
-<input type="radio" name="to-plant" value="to-plant" ng-model="status"> To-Plant
-<input type="radio" name="archived" value="archived-plant" ng-model="status"> Archived Plants
-<input type="radio" name="all" value="" ng-model="status"> All Plants -->
-
 <div id="plantContainer" class="row">
-    <div class="plant-card col-4" ng-repeat="plant in plantArr">
-  
-  
-      <img class="plant-pic" src="{{plant.img}}">
-      <div class="icon-field">
-        <img class="delete-btn" ng-click="removePlant(plant.fbID)" src="../img/delete-btn.png">
-        <img class="shovel-icon" ng-show="plant.sowSeason" src="../img/shovel.png">
-        <img class="actionReq" ng-show="plant.sowSeason" src="../img/alert.png">
-      </div>
-      <div>
-        <h5 class="plant-name">{{plant.name}}</h5>
-        <p ng-click="showNotePopUp(plant)">View/Edit Notes</p>
-      </div>  
-  
-  <!-- PLANT STATS TO SHOW ON LOAD -->
-      <div ng-show="plant.status === 'archived-plant'">
-        <p>Last Plant Date: {{plant.userPlant_date}}</p>
-      </div>
-  
-      <button type="button" class="btn btn-success btn-sm" ng-show="plant.status === 'archived-plant'" ng-click="changePlantStatus(plant.fbID, 'to-plant')">Plant Again</button>
-  
-      <!-- shows for all cards, produces pop up window when clicked -->
+    
+  <div class="plant-card col-4" ng-repeat="plant in plantArr">
+    <img class="plant-pic" src="{{plant.img}}">
+    <div class="icon-field">
+      <img class="delete-btn" ng-click="removePlant(plant.fbID)" src="../img/delete-btn.png">
+      <img class="shovel-icon" ng-show="plant.sowSeason" src="../img/shovel.png">
+      <img class="actionReq" ng-show="plant.sowSeason" src="../img/alert.png">
+    </div>
+    <div>
+      <h5 class="plant-name">{{plant.name}}</h5>
+      <p class="notesBtn" ng-click="showNotePopUp(plant)">View/Edit Notes</p>
+      <p>Last Plant Date: {{plant.userPlant_date}}</p>
+      <button type="button" class="btn btn-success btn-sm" ng-click="changePlantStatus(plant.fbID, 'to-plant')">Plant Again</button>
       <div class="get-more-info" ng-click="showPopover(plant)">
         <p>Get More Info</p>
       </div>
-  
-      
-    </div>
+    </div>  
   </div>
+
+</div>
   
   
   <!-- pop up for more plant info -->
@@ -41,11 +27,11 @@
       <img class="plant-pic" src="{{popoverPlant.img}}">
       <h6 class="plant-name">{{popoverPlant.name}}</h6> 
       <div ng-show="popoverPlant.status ==='to-plant' || 'archived-plant'"> 
-        <p>Plant Date Considerations: {{popoverPlant.plant_date}}</p>
-        <p>Planting Location: {{popoverPlant.sun_req}}</p>
-        <p>Growing From Seed: {{popoverPlant.growing_from_seed}}</p>
+        <p><span class="topic">Plant Date Considerations:</span><br> {{popoverPlant.plant_date}}</p>
+        <p><span class="topic">Planting Location:</span><br> {{popoverPlant.sun_req}}</p>
+        <p><span class="topic">Growing From Seed:</span><br> {{popoverPlant.growing_from_seed}}</p>
       </div>
-      <p>My Notes: {{popoverPlant.notes}}</p>
+      <p><span class="topic">My Notes:</span><br> {{popoverPlant.notes}}</p>
     </div>
   </div>
   

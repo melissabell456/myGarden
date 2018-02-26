@@ -10,7 +10,7 @@
     </div>
     <div>
       <h5 class="plant-name">{{plant.name}}</h5>
-      <p ng-click="showNotePopUp(plant)">View/Edit Notes</p>
+      <p class="notesBtn" ng-click="showNotePopUp(plant)">View/Edit Notes</p>
     </div>  
 
 <!-- PLANT STATS TO SHOW ON LOAD -->
@@ -37,12 +37,12 @@
     <img class="plant-pic" src="{{popoverPlant.img}}">
     <h6 class="plant-name">{{popoverPlant.name}}</h6> 
     <div> 
-      <p>Potential Pests: {{popoverPlant.pests}}</p>
-      <p>Potential Diseases: {{popoverPlant.diseases}}</p>
-      <p>Harvesting Considerations: {{popoverPlant.harvesting}}</p>
-      <p>Watering Considerations: {{popoverPlant.water_req}}</p>  
+      <p><span class="topic">Potential Pests:</span><br> {{popoverPlant.pests}}</p>
+      <p><span class="topic">Potential Diseases:</span><br> {{popoverPlant.diseases}}</p>
+      <p><span class="topic">Harvesting Considerations:</span><br> {{popoverPlant.harvesting}}</p>
+      <p><span class="topic">Watering Considerations:</span><br> {{popoverPlant.water_req}}</p>  
     </div>
-    <p>My Notes: {{popoverPlant.notes}}</p>
+    <p><span class="topic">My Notes:</span><br> {{popoverPlant.notes}}</p>
   </div>
 </div>
 

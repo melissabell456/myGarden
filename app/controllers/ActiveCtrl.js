@@ -54,6 +54,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     getDaysSinceRained()
     .then( (dayAmt) => {
       let daysSinceRained = dayAmt;
+      $scope.dayAmount = dayAmt;
       for (let plant in userPlants) {
         // build plantStats object with user specific properties recieved from firebase
         let plantStats = {};
@@ -98,7 +99,9 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
       .then ( (plantStats) => {
           let reqWater = plantStats[Object.keys(plantStats)[0]].water_interval;
           // if the user has not watered their plant for longer than the suggested frequency, this is resolved as true, else false
-          if (daysSinceWatered > reqWater && daysSinceRained > reqWater) {
+          // if (daysSinceWatered > reqWater && daysSinceRained > reqWater) {
+          console.log(daysSinceRained, "days since rain");
+          if (daysSinceRained >= reqWater && daysSinceWatered >= reqWater) {
             resolve(true);
           }
           else {
@@ -114,7 +117,6 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
 
   $scope.changePlantStatus = (firebaseID, status) => {
     let statusUpdate={
-        wat: 'activectrl',
         archived_date: $scope.todayDate,
         status_id: "archived-plant",
         status: `${currentUser}_${status}`
@@ -130,9 +132,7 @@ angular.module("myGardenApp").controller("ActiveCtrl", function($scope, HarvestH
     let patch = {[prop]: newData};
     UserPlantFctry.editUserPlant(firebaseID, patch)
     .then( () => {
-      console.log("should reload and filter for active only");
-      $scope.status = "active-plant";
-      // $state.reload();
+      $state.reload();
     });
   };
 
