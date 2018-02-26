@@ -27,8 +27,12 @@ angular.module("myGardenApp").constant("API_Key", {
 
 ## Screenshots:
 
-![alt text](img/screenshots/plant_alert.png "When user has selected a plant for their "to-plant" list, the user is alerted when the plant is ready to be planted")
-![alt text](img/screenshots/water_alert.png "User is alerted when active plants last manual water date and last rain date exceed suggested watering frequency of plant")
+When user has selected a plant for their "to-plant" list, the user is alerted when the plant is ready to be planted.
+![](img/screenshots/plant_alert.png)
+
+User is alerted when active plants last manual water date and last rain date exceed suggested watering frequency of plant.
+![](img/screenshots/water_alert.png)
+
 
 ## Technologies Used:
  + AngularJS w/ ui.router
