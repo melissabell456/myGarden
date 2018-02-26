@@ -63,11 +63,6 @@ body {
 // holds text and image logo
 #header {
   float: left;
-  // width: 25%;
-  // height: 100%;
-  // overflow: none;
-  // margin-right: 0em;
-  // display: inline-block;
 }
 
 #logoName {
@@ -129,32 +124,29 @@ body {
   padding-top: 1px;
 }
 
-// input field
-#searchEntry {
-}
-
-#searchBtn {
-
-}
 
 // all search result elements
 .search-result {
   font-family: 'Merriweather', serif;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 1em;
+  padding-bottom: 1em;
+  text-align: center;
 }
 
-.search-result img {
-  width: 20px;
-  background-color: transparent;
+.search-result p {
+  font-size: .75em;
+  margin-bottom: 1em;
 }
 
+.search-result button {
+  width: 95%;
+  margin-left: 4px;
+}
 .search-result-name {
   color:#504741;
-  margin-top: .3em;
-  margin-bottom: 0em;
-  margin-left: .5em;
-  margin-right: .5em;
-  padding: auto;
   display: inline;
+  margin-left: .5em;
 }
 
 // main display
@@ -204,6 +196,16 @@ body {
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   font-family: 'Merriweather', serif;
+}
+
+.notesBtn {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.notesBtn:hover {
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .plant-card button {
@@ -272,6 +274,7 @@ body {
   width: 20px;
   float: right;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .water-icon {

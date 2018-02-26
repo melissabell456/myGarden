@@ -10,7 +10,7 @@
       </div>
       <div>
         <h5 class="plant-name">{{plant.name}}</h5>
-        <p ng-click="showNotePopUp(plant)">View/Edit Notes</p>
+        <p class="notesBtn" ng-click="showNotePopUp(plant)">View/Edit Notes</p>
       </div>  
         <button type="button" class="btn btn-success btn-sm"ng-show="plant.status === 'to-plant'" ng-click="changePlantStatus(plant.fbID, 'active-plant')">Plant</button>
   

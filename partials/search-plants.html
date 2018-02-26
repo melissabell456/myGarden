@@ -6,17 +6,22 @@
           </div>
       </div>
 
+<!-- pop up for search results -->
 <div class="popover" ng-show="resultDisplay" ng-mouseleave="hidePopover()">
-  <div ng-repeat="plant in searchResult">
-    
+  
+  <div ng-repeat="plant in searchResult">  
     <div class="search-result">
-      <h6 class="search-result-name">{{plant.name}}</h6>  
-        <img class="add-btn" ng-click="addPlant(plant.id)" src="../img/add-btn.png">
-        <img class="query" ng-click="showPopover(plant)" src="../img/query.jpg">
+      <h5 class="search-result-name">{{plant.name}}</h5>  
+      <!-- <img class="add-btn" ng-click="addPlant(plant.id)" src="../img/add-btn2.png"> -->
+      <button type="button" class="btn btn-success btn-sm" ng-click="addPlant(plant.id)">Add Plant</button>
+      <div class="get-more-info">
+          <p ng-click="showPopover(plant)">Get More Info</p>
+        </div>
     </div>
+
 </div>
 
-  <!-- pop up -->
+  <!-- shows for plant when click for more detail -->
   <div ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
     <img class="plant-pic" src="{{popoverPlant.image}}">
     <h6 class="plant-name">{{popoverPlant.name}}</h6>  
