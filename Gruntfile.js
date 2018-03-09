@@ -6,8 +6,8 @@ module.exports = function(grunt) {
         externalModules: ["ui.router", "moment-picker"]
       },
       app: {
-        src: "../app/**/*.js",
-        dest: "../dist/project.js"
+        src: "./app/**/*.js",
+        dest: "./dist/project.js"
       }
     },
     jshint: {
@@ -17,22 +17,22 @@ module.exports = function(grunt) {
         globalstrict: true,
         globals: { angular: true }
       },
-      files: ["../app/**/*.js"]
+      files: ["./app/**/*.js"]
     },
     sass: {
       dist: {
         files: {
-          "../css/main.css": "../sass/main.scss"
+          "./css/main.css": "./sass/main.scss"
         }
       }
     },
     watch: {
       javascripts: {
-        files: ["../app/**/*.js"],
+        files: ["./app/**/*.js"],
         tasks: ["jshint", "angular-builder"]
       },
       sass: {
-        files: ["../sass/**/*.scss"],
+        files: ["./sass/**/*.scss"],
         tasks: ["sass"]
       }
     }
