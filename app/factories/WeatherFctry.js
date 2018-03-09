@@ -5,7 +5,7 @@ angular.module("myGardenApp").factory("WeatherFctry", function($http, $q, API_Ke
   const getHistoricalRain = (YYYYMMDD) => {
     return $q( (resolve, reject) => {
       $http
-      .get(`http://api.wunderground.com/api/${API_Key.weather}/history_${YYYYMMDD}/q/TN/Nashville.json`)
+      .get(`https://api.wunderground.com/api/${API_Key.weather}/history_${YYYYMMDD}/q/TN/Nashville.json`)
       .then( ({ data: {history: {dailysummary}} }) => {
         let rainInches = dailysummary[0].rain;
         if (rainInches > 0) {

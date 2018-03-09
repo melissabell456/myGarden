@@ -3,6 +3,6 @@ dist/
 .DS_Store
 .sass-cache
 assets/css/
-lib/package-lock.json
+package-lock.json
 app/config/
 data/

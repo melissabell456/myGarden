@@ -5,7 +5,7 @@ angular.module("myGardenApp").factory("HarvestHelperFctry", function($http, $q, 
   const searchByID = (plantID) => {
     return $q((resolve, reject) => {
       $http
-      .get(`http://harvesthelper.herokuapp.com/api/v1/plants/${plantID}?api_key=${API_Key.harvestHelper}`)
+      .get(`https://harvesthelper.herokuapp.com/api/v1/plants/${plantID}?api_key=${API_Key.harvestHelper}`)
       .then(({ data }) => {
         resolve(data);
       })
