@@ -23,8 +23,11 @@
   
   
   <!-- pop up for more plant info -->
-  <div class="popover" ng-show="popoverIsVisible" ng-mouseleave="hidePopover()">
+  <div class="popover" ng-show="popoverIsVisible">
     <div class="pop-plant-card">
+        <div class="icon-field">
+            <img class="delete-btn" ng-click="hidePopover()" src="../img/delete-btn.png">
+          </div>
       <img class="plant-pic" src="{{popoverPlant.img}}">
       <h5 class="plant-name">{{popoverPlant.name}}</h6> 
       <div> 

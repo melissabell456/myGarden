@@ -7,12 +7,13 @@
       </div>
 
 <!-- pop up for search results -->
-<div class="popover" ng-show="resultDisplay" ng-mouseleave="hidePopover()">
-  
+<div class="popover" ng-show="resultDisplay">
+  <div class="icon-field">
+    <img class="delete-btn" ng-click="hidePopover()" src="../img/delete-btn.png">
+  </div> 
   <div ng-repeat="plant in searchResult">  
     <div class="search-result">
       <h5 class="search-result-name">{{plant.name}}</h5>  
-      <!-- <img class="add-btn" ng-click="addPlant(plant.id)" src="../img/add-btn2.png"> -->
       <button type="button" class="btn btn-success btn-sm" ng-click="addPlant(plant.id)">Add Plant</button>
       <div class="get-more-info">
           <p ng-click="showPopover(plant)">Get More Info</p>
